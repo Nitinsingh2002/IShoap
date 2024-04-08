@@ -1,0 +1,87 @@
+import vendorRepository from "./vendor.repository.js";
+import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken'
+export default class vendorController {
+    constructor() {
+        this.vendorRepository = new vendorRepository();
+    }
+
+
+    async register(req, res, next) {
+        try {
+            const { name, email, password, mobile } = req.body
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await this.vendorRepository.Registervendor(name, email, hashedPassword, mobile);
+            return res.send("Vendor registered sucessfully..");
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async login(req, res, next) {
+        try {
+
+            const { email, password } = req.body;
+
+            const vendor = await this.vendorRepository.VendorLogin(email);
+
+            const match = await bcrypt.compare(password, vendor.password)
+            if (match) {
+                const token = jwt.sign({
+                    userId: vendor.id,
+                    email: vendor.email,
+                    name: vendor.name
+                },
+                    process.env.JWT_SECRET_KEY_CODE,
+                    {
+                        expiresIn: '4h'
+                    }
+                )
+                return res.status(200).send(token);
+            } else {
+                return res.status(403).send("incorrect credentials");
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getall(req, res, next) {
+        try {
+            const adminId = req.userId;
+            const result = await this.vendorRepository.fetchall(adminId);
+            return res.status(200).send(result)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async update(req, res, next) {
+        try {
+            const vendorId = req.userId;
+            const { name, email, mobile } = req.body
+            await this.vendorRepository.vendorUpdate(vendorId, name, email, mobile)
+            return res.status(200).send("details updated sucessfully")
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async addproduct(req, res, next) {
+        try {
+            const vendorId = req.userId
+            const { name, price, description, stock, categoryId } = req.body
+            const image = req.files.map(file => file.filename)
+            await this.vendorRepository.productadd(vendorId, name, price, description, stock, categoryId, image);
+            return res.status(201).send('The product is awaiting approval from the administrator.')
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+
+}

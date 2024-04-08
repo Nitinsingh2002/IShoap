@@ -1,0 +1,117 @@
+import userRepository from "./user.repository.js";
+import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken'
+
+export default class userController {
+    constructor() {
+        this.userRepository = new userRepository();
+    }
+
+
+
+    async addUser(req, res, next) {
+        try {
+            const { firstName, lastName, email, mobile, gender, password } = req.body
+            const DateOfBirth = new Date(req.body.DateOfBirth)
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await this.userRepository.RegisterCustomer(firstName, lastName, email, hashedPassword, mobile, gender, DateOfBirth);
+            return res.send("user registered sucessfully");
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async userLogin(req, res, next) {
+        try {
+            const { email, password } = req.body;
+            const user = await this.userRepository.customerLogin(email);
+
+            const match = await bcrypt.compare(password, user.password)
+            if (match) {
+                const token = jwt.sign({
+                    userId: user.id,
+                    email: user.email,
+                    name: user.name
+                },
+                    process.env.JWT_SECRET_KEY_CODE,
+                    {
+                        expiresIn: '4h'
+                    }
+                )
+                return res.status(200).send(token);
+            } else {
+                return res.status(403).send("incorrect credentials");
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async getAlluser(req, res, next) {
+        try {
+            const adminId = req.userId;
+            const result = await this.userRepository.getAllcustomer(adminId);
+            return res.status(200).send(result);
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async addUserAdress(req, res, next) {
+        try {
+            const userId = req.userId;
+            const { street, city, state, postalCode, country } = req.body
+            const address = ({
+                customerId: userId,
+                street: street,
+                city: city,
+                state: state,
+                postalCode: postalCode,
+                country: country
+            })
+            await this.userRepository.addCustomeraddress(userId, address);
+            return res.status(201).send("address added sucessfully");
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async getAddress(req, res, next) {
+        try {
+            const userId = req.userId;
+            const result = await this.userRepository.getCustomerAddress(userId);
+            return res.status(200).send(result)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async deleteUserAdress(req, res, next) {
+        try {
+            const userId = req.userId
+            const id = req.params.id;
+            await this.userRepository.deleteCustomeradress(userId, id);
+            return res.status(200).send("adddress deleted sucessfully");
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async updateUserAddress(req, res, next) {
+        try {
+            const userId = req.userId;
+            const id = req.params.id;
+            const { street, city, state, country, postalCode } = req.body
+            await this.userRepository.updateCustomerAddress(userId, id, street, city, state, country, postalCode);
+            return res.status(200).send("address updated sucessfully")
+        } catch (error) {
+            next(error)
+        }
+    }
+
+}
