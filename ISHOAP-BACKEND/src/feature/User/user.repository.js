@@ -107,7 +107,7 @@ export default class userRepository {
             if (!user) {
                 throw new NotFoundError("user not found");
             } else {
-                const address = await addressModel.find({ customerId: userId }, { street: 1, city: 1, country: 1, postalCode: 1, state: 1 }).exec()
+                const address = await addressModel.find({ customerId: userId }, { name: 1, street: 1, city: 1, country: 1, postalCode: 1, state: 1, mobile: 1 }).exec()
                 return address;
             }
         } catch (error) {
@@ -141,10 +141,10 @@ export default class userRepository {
         }
     }
 
-    
-    async updateCustomerAddress(userId, id, street, city, state, country, postalCode) {
+
+    async updateCustomerAddress(userId, id, street, city, state, country, postalCode, mobile, name) {
         try {
-            if (!street || !city || !state || !country || !postalCode) {
+            if (!street || !city || !state || !country || !postalCode || !mobile || !name) {
                 throw new ValidationError("All fields are required");
             }
             const user = await userModel.findById(userId);
@@ -156,7 +156,9 @@ export default class userRepository {
                     city: city,
                     postalCode: postalCode,
                     country: country,
-                    state: state
+                    state: state,
+                    mobile: mobile,
+                    name: name
                 })
 
                 if (!address) {
@@ -170,11 +172,26 @@ export default class userRepository {
                 throw new NotFoundError(error.message)
             } else if (error instanceof ValidationError) {
                 throw new ValidationError(error.message, 403)
-            }else {
+            } else {
                 throw new ApplicationError("Something went wrong in upadating address", 503)
             }
         }
     }
 
-
+    async getoneUser(userid) {
+        try {
+            const user = await userModel.findById(userid).select("-password")
+            if (!user) {
+                throw new NotFoundError("User not found")
+            } else {
+                return user;
+            }
+        } catch (error) {
+            if (error instanceof NotFoundError) {
+                throw new NotFoundError(error.message)
+            } else {
+                throw new ApplicationError("Something went wrong in fetching user details")
+            }
+        }
+    }
 }

@@ -53,6 +53,7 @@ export default class productRepository {
             return savedresult;
 
         } catch (error) {
+            console.log(error)
             if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
             }
@@ -180,9 +181,10 @@ export default class productRepository {
 
     async fetchall() {
         try {
-            const allProducts = await ProductModel.find({}, { ratingsDetails: 0 }).exec()
+            const allProducts = await ProductModel.find({}, { ratingsDetails: 0 }).populate('categoryId').exec()
             return allProducts;
         } catch (error) {
+            console.log(error)
             throw new ApplicationError("something went wrong in fetching all products", 503)
         }
     }
@@ -259,7 +261,7 @@ export default class productRepository {
 
     async filterProduct(minprice, maxPrice, category) {
         try {
-         
+
 
 
             let filterQuery = {}
@@ -286,7 +288,7 @@ export default class productRepository {
 
 
         } catch (error) {
-         
+
             if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
             } else {

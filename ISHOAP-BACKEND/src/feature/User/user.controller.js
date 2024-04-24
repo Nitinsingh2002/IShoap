@@ -62,14 +62,16 @@ export default class userController {
     async addUserAdress(req, res, next) {
         try {
             const userId = req.userId;
-            const { street, city, state, postalCode, country } = req.body
+            const { street, city, state, postalCode, country, mobile, name } = req.body
             const address = ({
                 customerId: userId,
+                name: name,
                 street: street,
                 city: city,
                 state: state,
                 postalCode: postalCode,
-                country: country
+                country: country,
+                mobile: mobile
             })
             await this.userRepository.addCustomeraddress(userId, address);
             return res.status(201).send("address added sucessfully");
@@ -106,9 +108,20 @@ export default class userController {
         try {
             const userId = req.userId;
             const id = req.params.id;
-            const { street, city, state, country, postalCode } = req.body
-            await this.userRepository.updateCustomerAddress(userId, id, street, city, state, country, postalCode);
+            const { street, city, state, country, postalCode, mobile,name } = req.body
+            await this.userRepository.updateCustomerAddress(userId, id, street, city, state, country, postalCode, mobile,name);
             return res.status(200).send("address updated sucessfully")
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async getSingleUser(req, res, next) {
+        try {
+            const id = req.userId;
+            const result = await this.userRepository.getoneUser(id);
+            return res.status(200).send(result)
         } catch (error) {
             next(error)
         }

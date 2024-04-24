@@ -37,4 +37,10 @@ userRoutes.put("/update-address/:id", jwtauth, (req, res, next) => {
     UserController.updateUserAddress(req, res, next)
 })
 
+
+userRoutes.get("/fetchUserDetails", jwtauth, (req, res, next) => {
+    UserController.getSingleUser(req, res, next)
+})
+
+
 export default userRoutes;

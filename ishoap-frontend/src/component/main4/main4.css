@@ -1,0 +1,28 @@
+.main4{
+  text-align: center;
+  background-color: rgb(227, 245, 245);
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.main4part1{
+    font-size: larger;
+    padding-top: 4rem;
+    font-weight: bold;
+}
+.main4part2{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 4rem;
+    padding-top: 1rem;
+    flex-wrap: wrap;
+}
+.slide{
+    height: 100px;
+}
+.slide img{
+    height: 100%;
+}
+.fis{
+  padding: 0 1rem;
+}

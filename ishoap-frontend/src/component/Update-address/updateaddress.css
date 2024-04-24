@@ -1,0 +1,11 @@
+.button-containerr{
+    width: 100% !important;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.button-containerr Button{
+    width: 48% !important;
+
+}

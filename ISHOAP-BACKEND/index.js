@@ -35,6 +35,9 @@ app.get("/", (req, res) => {
 })
 
 
+app.use('/images', express.static('public/images'));
+
+
 app.use((error, req, res, next) => {
     console.log(error)
     if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ApplicationError) {

@@ -44,7 +44,7 @@ const productSchema = new Schema({
     },
     categoryId: {
         type: mongoose.Types.ObjectId,
-        ref: 'categories'
+        ref: 'Category'
     },
     ratingsDetails: [{
         type: mongoose.Types.ObjectId,
