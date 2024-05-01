@@ -39,17 +39,21 @@ export function Navbar() {
         <>
             <nav>
                 <div className='Brand'>
-                    <h2>Ishoap</h2>
+                    <h2><Link style={{ textDecoration: "none" }} to={"/"}>Ishoap</Link></h2>
                 </div>
 
                 <div className={menu ? 'navbar-details showMenu' : 'navbar-details'}>
-                    <div className='detail' ><i className="bi bi-house-door-fill"></i>Home</div>
+                    <Link to="/" className='user-info-nav'>
+                        <div className='detail' ><i className="bi bi-house-door-fill"></i>Home</div>
+                    </Link>
                     <Link to="/user-info" className='user-info-nav'>
                         <div className='detail ' ><i className="bi bi-person-circle"></i>
                             {decodedToken ? decodedToken.name.firstName : "User"}
                         </div>
                     </Link>
-                    <div className='detail'><i className="bi bi-speaker-fill"></i>Products</div>
+                    <Link to="/product" className='user-info-nav'>
+                        <div className='detail'><i className="bi bi-speaker-fill"></i>Products</div>
+                    </Link>
                     <div className='detail'><i className="bi bi-basket-fill"></i>cart</div>
                     <div className='detail' onClick={handleLogout}><i className="bi bi-box-arrow-in-right"></i>Logout</div>
                 </div>

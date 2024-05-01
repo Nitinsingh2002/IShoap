@@ -33,9 +33,11 @@ export function Userlogin() {
         onSubmit: async (formData) => {
             setIsLogin(true)
             try {
+                const expirationTime = new Date();
+                expirationTime.setTime(expirationTime.getTime() + (4 * 60 * 60 * 1000));
                 const { email, password } = formData;
                 const response = await axios.post('http://localhost:8000/user/user-login', { email, password })
-                setCookie('token', response.data)
+                setCookie('token', response.data, { expires: expirationTime })
                 navigate("/");
                 toast.success("Login sucessfull !")
             } catch (error) {

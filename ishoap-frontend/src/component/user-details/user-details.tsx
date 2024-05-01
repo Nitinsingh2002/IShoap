@@ -9,7 +9,7 @@ import './user-details.css'
 import { PersonalInfo } from "../personal-information/personalInfo";
 import { ShowAllAddress } from "../show-address/show-address";
 import { AddressForm } from '../address-form/address'
-import { UpdateAddress } from "../Update-address/update-address";
+
 
 
 export function UserInfo() {
@@ -36,7 +36,7 @@ export function UserInfo() {
     const [showPersonalInfo, setShowPersonalInfo] = useState<boolean>(true);
     const [showadress, setShowAddress] = useState<boolean>(false);
     const [showAddAddress, setShowAddAddress] = useState<boolean>(false);
-
+    const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
     async function loadApi(): Promise<void> {
         const result = await fetchDataFromApi({
@@ -90,7 +90,17 @@ export function UserInfo() {
             <div className="user-info">
 
                 <div className="userInfo-parent">
-                    <div className="user-info-sidebar">
+
+
+                    <div className="responsive-user-info" onClick={() => setShowSidebar(!showSidebar)}>
+                        {
+                            showSidebar ? (<i className="bi bi-x-circle"></i>) : <i className="bi bi-border-width"></i>
+                        }
+
+                    </div>
+
+
+                    <div className={showSidebar ? "active-sidebar" : "user-info-sidebar"}>
                         <div className="gretting">
                             <p>Hello,</p>
                             <h5>{userData?.name.firstName} {userData?.name.lastName}</h5>
@@ -104,6 +114,9 @@ export function UserInfo() {
 
                         </div>
                     </div>
+
+
+
 
                     <div className="user-info-container">
                         {
@@ -123,10 +136,6 @@ export function UserInfo() {
                         <div className="add-address">
                             {showAddAddress && <AddressForm onAddressSubmitted={handleAddressSubmitted} />}
                         </div>
-
-
-
-
 
                     </div>
                 </div>

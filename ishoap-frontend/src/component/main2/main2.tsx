@@ -42,11 +42,10 @@ export function Main2() {
 
             <div className='animation'>
                 {
-                    product.map((item, index) => (
+                    product.slice(0,3).map((item, index) => (
                         <div className='product-container' key={index}>
                             <div className='product-image'>
-                                <img src={`http://localhost:8000/images/${item.image[0]}`} alt={item.name} />
-
+                                <img src={`http://localhost:8000/images/${item.image[3]}`} alt={item.name} />
                             </div>
 
                             <div className='product-details'>

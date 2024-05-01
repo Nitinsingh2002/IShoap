@@ -155,7 +155,7 @@ export function ShowAllAddress({ token, handleAddaddress }: { token: any, handle
                                             horizontal: 'right',
                                         }}
                                     >
-                                        <MenuItem onClick={() =>  handleMenuClick(a)}
+                                        <MenuItem onClick={() => handleMenuClick(a)}
                                             className='update MenuItem'
                                         >
                                             Update

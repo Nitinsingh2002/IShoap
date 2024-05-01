@@ -2,6 +2,7 @@
 import './part1.css'
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 
 export function MainPartOne() {
@@ -16,7 +17,7 @@ export function MainPartOne() {
                     for convenient and satisfying shopping today and let us be your one-stop destination
                     for all your shopping needs.
                 </p>
-                <Button variant="contained" size="medium">SHOAP NOW</Button>
+              <Link to={"/product"}> <Button variant="contained" size="medium">SHOAP NOW</Button></Link>
             </div>
 
 

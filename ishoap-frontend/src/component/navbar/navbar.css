@@ -30,7 +30,7 @@ nav {
 .user-info-nav {
     text-decoration: none !important;
     color: black;
-    font-size: larger;
+    font-size: 1.2rem;
 
 }
 
@@ -76,6 +76,7 @@ nav {
     .showMenu {
         transition: all 0.3s linear;
         left: 0%;
+        z-index: 100;
     }
 
     .icons {
