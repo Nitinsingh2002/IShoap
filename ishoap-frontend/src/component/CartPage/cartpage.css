@@ -1,0 +1,48 @@
+.table-container {
+
+    height: auto;
+    min-height: 88vh;
+}
+
+.table-cart {
+    width: 80%;
+    margin: auto;
+    height: inherit;
+    border-collapse: collapse;
+    box-shadow: 0px 1px 1px gray;
+    margin-top: 2rem;
+}
+
+.cart-table-head {
+    text-align: center;
+    padding-bottom: 0.5rem;
+}
+
+.cart-table-data {
+    border-bottom: 1px solid gray;
+    text-align: center;
+}
+
+.cart-table-image {
+    padding: 0%;
+    height: 15vh;
+    width: 10vw;
+    padding: 0.2rem;
+}
+
+.cart-table-image img {
+    height: 100%;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.table-fotter- {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.plusButton {
+    background-color: white;
+    border: none;
+    color: blue;
+}

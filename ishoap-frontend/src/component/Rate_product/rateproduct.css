@@ -1,0 +1,41 @@
+
+
+.bg-color-star {
+    color: yellow;
+}
+
+.rating-button {
+    margin: auto;
+    width: 20%;
+}
+
+
+
+.rating-update-delete-button {
+    margin: auto;
+    display: flex;
+    gap: auto;
+    justify-content: space-between;
+    gap: 9.5vw;
+}
+
+.already {
+    text-align: start;
+    padding-left: 0.2rem;
+    font-size: large;
+    font-weight: bold;
+    
+}
+
+.fetch-rating {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.fetch_updated{
+    box-shadow: 0px 2px 1px gray;
+    margin-top: 10rem;
+    padding: 0.5rem 2rem;
+}

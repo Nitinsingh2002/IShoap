@@ -161,7 +161,7 @@ export default class productRepository {
 
     async fetchDeatails(id) {
         try {
-            const product = await ProductModel.findById(id, { ratingsDetails: 0 });
+            const product = await ProductModel.findById(id, { ratingsDetails: 0 }).populate('vendorId', { name: 1 });
             if (!product) {
                 throw new NotFoundError("product not found")
             } else {

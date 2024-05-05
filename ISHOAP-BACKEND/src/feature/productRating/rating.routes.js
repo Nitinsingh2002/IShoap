@@ -20,4 +20,7 @@ ratingRoutes.put("/upadte-rating/:id/product/:pid", (req, res, next) => {
     RatingController.updateRating(req, res, next)
 })
 
+ratingRoutes.get("/get-rating/:productId",(req,res,next) =>{
+    RatingController.getRating(req,res,next);
+})
 export default ratingRoutes;

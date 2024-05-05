@@ -178,5 +178,27 @@ export default class ratingRepsitory {
         }
     }
 
+
+    async get(userId, productId) {
+        try {
+            const product = await productModel.findById(productId);
+            if (!product) {
+                throw new NotFoundError("Product not found")
+            }
+            const user = await userModel.findById(userId);
+            if (!user) {
+                throw new NotFoundError("User not found");
+            }
+            const getRating = ratingModel.findOne({ userId: userId, productId: productId });
+            return getRating;
+        } catch (error) {
+            if (error instanceof NotFoundError) {
+                throw new NotFoundError(error.message)
+            } else {
+                throw new ApplicationError("something went wrong in fetching rating details");
+            }
+        }
+    }
+
 }
 

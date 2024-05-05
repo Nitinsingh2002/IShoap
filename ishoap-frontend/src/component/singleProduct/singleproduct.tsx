@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import { ProductDetails } from "../../contract/productDetails.contract"
 import { useEffect, useState } from "react";
 import { useFetchApi } from "../../Custom-Hooks/useFetchApi";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import './singleproduct.css'
@@ -53,6 +53,24 @@ export function SingleProduct() {
         }
     }
 
+    const addToCart = async () => {
+        const result = await fetchDataFromApi({
+            url: `http://localhost:8000/cart/add/${id}`,
+            method: 'POST',
+            token: token,
+            data: { quantity: quantity }
+        })
+        if (result.error) {
+            toast.error(result.error, {
+                autoClose: 1000
+            })
+        } else {
+            toast.success("product added to cart", {
+                autoClose: 1000
+            })
+        }
+    }
+
 
     useEffect(() => {
         if (!token) {
@@ -65,7 +83,9 @@ export function SingleProduct() {
 
 
     return (
+       
         <div className="Product-container">
+             <ToastContainer/>
             <div className="first-half">
                 <div className="all-image-container">
                     {produtDetails && produtDetails.image && produtDetails.image.map((image, index) => (
@@ -94,8 +114,8 @@ export function SingleProduct() {
                     <div className="rating_container_button">{produtDetails?.rating.rate} <i className="bi bi-star-fill star" /></div>
                     <p className="product-rating-count">{produtDetails?.rating.count}  Ratings</p>
                     <p className="product-rating-count text-primary">
-                        <Link to={`/rate-product/${id}`} style={{textDecoration:"none"}}>
-                             Rate product
+                        <Link to={`/rate-product/${id}`} style={{ textDecoration: "none" }}>
+                            Rate product
                         </Link>
                     </p>
                 </div>
@@ -181,7 +201,7 @@ export function SingleProduct() {
                         <span className="quantity-button text-primary">{quantity}</span>
                         <button className="quantity-button ms-2" onClick={handleminusclick}> -</button>
                     </div>
-                    <Button variant="contained" endIcon={<AddShoppingCartIcon />}>
+                    <Button variant="contained" endIcon={<AddShoppingCartIcon />}  onClick={addToCart}>
                         ADD TO CART
                     </Button>
                 </div>

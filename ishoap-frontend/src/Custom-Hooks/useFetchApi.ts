@@ -5,6 +5,7 @@ interface FetchParams {
     method: Method;
     token?: string;
     data?: any;
+
 }
 
 export interface FetchApiResult {
@@ -28,7 +29,8 @@ export function useFetchApi() {
                 url,
                 method,
                 headers,
-                data
+                data,
+              
             });
             return { response: response.data, error: null };
         } catch (error) {

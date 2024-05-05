@@ -25,4 +25,6 @@ categoryRoutes.delete("/remove/:id", (req, res, next) => {
 categoryRoutes.get("/get-category-products/:id", (req, res, next) => {
     CategoryController.getproductsrelatedTocategory(req, res, next)
 })
+
+
 export default categoryRoutes;

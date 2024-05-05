@@ -22,16 +22,27 @@ export class cartRepository {
                 throw new NotFoundError("Product not found to add to cart")
             }
 
-            const result = new cartModel({
-                userId: userId,
-                productId: productId,
-                quantity: quantity,
-                totalPrice: product.price * quantity,
-                createdAt: Date.now()
-            })
+            let cartItem = await cartModel.findOne({ userId: userId, productId: productId });
 
-            const savedResult = await result.save();
-            return savedResult;
+            if (cartItem) {
+                cartItem.quantity += quantity;
+                if (cartItem.quantity > 5) {
+                    throw new ValidationError("You can't add more than 5 items of this product")
+                }
+                cartItem.totalPrice = product.price * cartItem.quantity;
+                await cartItem.save();
+                return cartItem;
+            } else {
+                const newCartItem = new cartModel({
+                    userId: userId,
+                    productId: productId,
+                    quantity: quantity,
+                    totalPrice: product.price * quantity,
+                    createdAt: Date.now()
+                })
+                const savedResult = await newCartItem.save();
+                return savedResult;
+            }
 
         } catch (error) {
             console.log(error)
@@ -40,7 +51,10 @@ export class cartRepository {
             } else if (error instanceof mongoose.Error.ValidationError) {
                 const firstErrorMessage = Object.values(error.errors)[0].message;
                 throw new ValidationError(firstErrorMessage, 422);
-            } else {
+            } else if (error instanceof ValidationError) {
+                throw new ValidationError(error.message, 422)
+            }
+            else {
                 throw new ApplicationError("Something went wrong adding product to cart", 503)
             }
         }
@@ -116,14 +130,14 @@ export class cartRepository {
         }
     }
 
-    async get(userId){
+    async get(userId) {
         try {
             const user = await userModel.findById(userId)
-            if(!user){
+            if (!user) {
                 throw new NotFoundError("user not found")
             }
 
-            const result = await cartModel.find({userId:userId}).populate('productId').exec();
+            const result = await cartModel.find({ userId: userId }).populate('productId').exec();
             return result;
         } catch (error) {
             if (error instanceof NotFoundError) {

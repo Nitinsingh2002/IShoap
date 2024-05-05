@@ -40,10 +40,22 @@ export default class ratingController {
             const id = req.params.id;
             const productId = req.params.pid
             const rating = req.body.rating
+          
             await this.ratingRepsitory.update(id, userId, productId, parseFloat(rating))
             return res.status(200).send("rating updated sucessfully");
         } catch (error) {
             next(error)
+        }
+    }
+
+    async getRating(req, res, next) {
+        try {
+            const userId = req.userId;
+            const productId = req.params.productId;
+            const result = await this.ratingRepsitory.get(userId,productId);
+            return res.status(201).send(result);
+        } catch (error) {
+            next(error);
         }
     }
 }

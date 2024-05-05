@@ -40,7 +40,7 @@ const productSchema = new Schema({
     // },
     vendorId: {
         type: mongoose.Types.ObjectId,
-        ref: 'vendors'
+        ref: 'vendor'
     },
     categoryId: {
         type: mongoose.Types.ObjectId,
