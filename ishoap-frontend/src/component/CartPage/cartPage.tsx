@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { CartDetails } from '../../contract/cartContract';
 import './cartpage.css'
 import { Button } from "@mui/material";
+import { ReusableModal } from "../Resuable-modal/ReuasbleModal";
 
 export const CartPage = () => {
     const fetchDataFromApi = useFetchApi();
@@ -15,6 +16,7 @@ export const CartPage = () => {
     const [qunatity, setQunatity] = useState<number>(0)
     const [showQuantityButton, setShowQuantityButton] = useState<number | null>(null);
     const [cartUpdated, setCartUpdated] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 
     const loadCartData = async () => {
@@ -45,7 +47,7 @@ export const CartPage = () => {
     }
 
     const cartUpdate = async (id: string) => {
-    
+
         const result = await fetchDataFromApi({
             url: `http://localhost:8000/cart/update/${id}`,
             method: 'PUT',
@@ -83,78 +85,124 @@ export const CartPage = () => {
         setShowQuantityButton(null)
     }
 
+    const handleDeleteClick = (): void => {
+        setIsModalOpen(true);
+    };
 
 
+    const handleConfirmDelete = (id: string): void => {
+        onDelete(id);
+        setIsModalOpen(false);
+    };
+
+    const handleCloseModal = (): void => {
+        setIsModalOpen(false);
+    };
+
+    const onDelete = async (id: string): Promise<void> => {
+        const result = await fetchDataFromApi({
+            url: `http://localhost:8000/cart/delete/${id}`,
+            token: token,
+            method: 'delete'
+        })
+
+        if (result.error) {
+            toast.error(result.error, {
+                autoClose: 1000
+            })
+        } else {
+            toast.success("item deleted from cart", {
+                autoClose: 1000
+            })
+            loadCartData();
+        }
+
+    }
 
 
 
     useEffect(() => {
         loadCartData();
-    }, [finalPrice,cartUpdated]);
+    }, [finalPrice, cartUpdated]);
+
+    console.log('cartData', cartData)
 
 
-
-    return (
+        return (
         <div className="table-container">
             <ToastContainer />
 
-            <table className="table-cart">
-                <thead className="cart-table-head">
-                    <tr style={{ borderBottom: '1px solid gray' }} className="mb-2">
-                        <th className="cart-table-head">Preview</th>
-                        <th className="cart-table-head">Product name</th>
-                        <th className="cart-table-head">Price</th>
-                        <th className="cart-table-head">Quantity</th>
-                        <th className="cart-table-head">Total Price</th>
-                        <th className="cart-table-head">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {cartData.map((item, index) => (
-                        <tr key={index}>
-                            <td className="cart-table-data cart-table-image"> <img src={`http://localhost:8000/images/${item.productId.image[0]}`} /></td>
-                            <td className="cart-table-data">{item.productId.name}</td>
-                            <td className="cart-table-data">{item.productId.price}</td>
-                            <td className="cart-table-data" >
-                                {showQuantityButton === index ? (
-                                    <>
-                                        <button onClick={() => handleplusClick(index)} className="bi bi-plus-circle-fill plusButton">  </button>
-                                        {qunatity}
-                                        <button onClick={() => handleminusclick(index)} className="plusButton bi bi-dash-circle-fill">  </button>
+            {cartData.length === 0 ? (
+                <p className="empty-cart">Your cart is currently empty.</p>
+            ) : (
+                <table className="table-cart">
+                    <thead className="cart-table-head">
+                        <tr style={{ borderBottom: '1px solid gray' }} className="mb-2">
+                            <th className="cart-table-head">Preview</th>
+                            <th className="cart-table-head">Product name</th>
+                            <th className="cart-table-head">Price</th>
+                            <th className="cart-table-head">Quantity</th>
+                            <th className="cart-table-head">Total Price</th>
+                            <th className="cart-table-head">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cartData.map((item, index) => (
+                            <tr key={index}>
+                                <td className="cart-table-data cart-table-image"> <img src={`http://localhost:8000/images/${item.productId.image[0]}`} /></td>
+                                <td className="cart-table-data">{item.productId.name}</td>
+                                <td className="cart-table-data">{item.productId.price}</td>
+                                <td className="cart-table-data" >
+                                    {showQuantityButton === index ? (
+                                        <>
+                                            <button onClick={() => handleplusClick(index)} className="bi bi-plus-circle-fill plusButton">  </button>
+                                            {qunatity}
+                                            <button onClick={() => handleminusclick(index)} className="plusButton bi bi-dash-circle-fill">  </button>
 
-                                    </>
-                                ) : (
-                                    <>{item.quantity}</>
-                                )}
-                            </td>
-                            <td className="cart-table-data">{item.totalPrice}</td>
-                            <td className="cart-table-data">
+                                        </>
+                                    ) : (
+                                        <>{item.quantity}</>
+                                    )}
+                                </td>
+                                <td className="cart-table-data">{item.totalPrice}</td>
+                                <td className="cart-table-data">
 
-                                {
-                                    showQuantityButton === index ?
-                                        (<Button variant="contained" size='small' className="me-2 " onClick={() => handlesave(item._id)}> Save</Button>)
-                                        :
-                                        (<Button variant="outlined" size="small" className="me-2 " onClick={() => handleUpdate(item.quantity, index)}>Update</Button>)
-                                }
+                                    {
+                                        showQuantityButton === index ?
+                                            (<Button variant="contained" size='small' className=" btn " onClick={() => handlesave(item._id)}> Save</Button>)
+                                            :
+                                            (<Button variant="outlined" size="small" className=" btn" onClick={() => handleUpdate(item.quantity, index)}>Update</Button>)
+                                    }
 
 
-                                <Button variant="outlined" size="small" color="error">Delete</Button>
+                                    <Button variant="outlined" size="small" color="error" onClick={handleDeleteClick}>Delete</Button>
+                                    <ReusableModal
+                                        isOpen={isModalOpen}
+                                        onClose={handleCloseModal}
+                                        onConfirm={() => { handleConfirmDelete(item._id) }}
+                                        message="Are you sure to delete this item from cart?"
+
+                                    />
+
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+
+
+                    <tfoot>
+                        <tr >
+                            <td className="table-fotter-  text-end fw-bold" colSpan={5}>Total ammount: {finalPrice?.toLocaleString('en-In', { style: 'currency', currency: 'INR' })}</td>
+                            <td className="text-end table-fotter-">
+                                <Button className="btn btn-primary buybtn " variant="contained">Buy now</Button>
                             </td>
                         </tr>
-                    ))}
-                </tbody>
+                    </tfoot>
 
-
-                <tfoot>
-                    <tr >
-                        <td className="table-fotter-  text-end fw-bold" colSpan={5}>Total ammount: {finalPrice?.toLocaleString('en-In', { style: 'currency', currency: 'INR' })}</td>
-                        <td className="text-end table-fotter-">
-                            <Button className="btn btn-primary me-5 " variant="contained">Buy now</Button>
-                        </td>
-                    </tr>
-                </tfoot>
-
-            </table>
+                </table>
+            )}
         </div>
     );
+
+    
 };

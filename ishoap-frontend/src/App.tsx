@@ -12,6 +12,8 @@ import { Product } from "./component/Product/Product";
 import { SingleProduct } from "./component/singleProduct/singleproduct";
 import { RateProduct } from "./component/Rate_product/rateProduct";
 import { CartPage } from "./component/CartPage/cartPage";
+import { VendorRegistration } from "./component/vendorRegistrationLogin/vendorRegistraion";
+import { VendorLogin } from "./component/vendorRegistrationLogin/vendorLogin";
 
 
 
@@ -30,6 +32,8 @@ function App() {
           <Route path="/product/:id" element={<><Navbar /><SingleProduct /></>} />
           <Route path="/rate-product/:id" element={<><Navbar /> <RateProduct /></>} />
           <Route path="/cart" element={<><Navbar /><CartPage /></>} />
+          <Route path="/vendor/registration" element={<><VendorRegistration/></>} ></Route>
+          <Route path="/vendor/login"element= {<VendorLogin/>} />
         </Routes>
 
       </BrowserRouter>
