@@ -74,9 +74,25 @@ export default class vendorController {
         try {
             const vendorId = req.userId
             const { name, price, description, stock, categoryId } = req.body
+            console.log(name, price, description, stock, categoryId);
             const image = req.files.map(file => file.filename)
+            console.log("image", image)
             await this.vendorRepository.productadd(vendorId, name, price, description, stock, categoryId, image);
             return res.status(201).send('The product is awaiting approval from the administrator.')
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async testController(req, res, next) {
+        try {
+            const name = req.body.name;
+            console.log(req.file)
+            const  image  = req.file.filename;
+            // console.log('in test contro', image);
+            const result = await this.vendorRepository.testRepo(name, image);
+            return res.status(201).send(result);
         } catch (error) {
             next(error)
         }

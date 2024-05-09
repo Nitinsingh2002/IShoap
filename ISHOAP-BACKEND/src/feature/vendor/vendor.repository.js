@@ -5,7 +5,7 @@ import vendorModel from "./vendor.schema.js";
 import NotFoundError from "../../../Error/notFound.error.js";
 import adminmodel from "../admin/admin.schema.js";
 import pendingProductModel from "./pending.product.schema.js";
-import res from "express/lib/response.js";
+import testModel from '../vendor/test.schema.js';
 
 
 export default class vendorRepository {
@@ -149,5 +149,18 @@ export default class vendorRepository {
     }
 
 
+    async testRepo(name, image) {
+        try {
+            const resut = new testModel({
+                name: name,
+                image: image
+            })
+
+            const savedResult = await resut.save()
+            return savedResult;
+        } catch (error) {
+            throw new ApplicationError("Something went wrong adding test", 503)
+        }
+    }
 
 }

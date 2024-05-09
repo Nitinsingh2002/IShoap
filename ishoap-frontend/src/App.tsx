@@ -14,6 +14,8 @@ import { RateProduct } from "./component/Rate_product/rateProduct";
 import { CartPage } from "./component/CartPage/cartPage";
 import { VendorRegistration } from "./component/vendorRegistrationLogin/vendorRegistraion";
 import { VendorLogin } from "./component/vendorRegistrationLogin/vendorLogin";
+import { VendorAddProduct } from "./component/vendorDashBoard/vendoAddProduct";
+import { FormDemo } from "./component/formDemo";
 
 
 
@@ -34,6 +36,8 @@ function App() {
           <Route path="/cart" element={<><Navbar /><CartPage /></>} />
           <Route path="/vendor/registration" element={<><VendorRegistration/></>} ></Route>
           <Route path="/vendor/login"element= {<VendorLogin/>} />
+          <Route path="/vendor/add-product" element = {<VendorAddProduct/>} />
+          <Route path = '/test' element = {<FormDemo/>} />
         </Routes>
 
       </BrowserRouter>

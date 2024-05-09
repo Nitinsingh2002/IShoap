@@ -31,6 +31,10 @@ vendorRoutes.post("/add-pendingProduct", jwtauth, uploadFile.array('image', 4), 
 })
 
 
+vendorRoutes.post('/test', uploadFile.single('image'), (req, res, next) => {
+    VendorController.testController(req, res, next);
+})
+
 
 
 
