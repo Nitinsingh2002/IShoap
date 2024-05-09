@@ -16,6 +16,11 @@ import { VendorRegistration } from "./component/vendorRegistrationLogin/vendorRe
 import { VendorLogin } from "./component/vendorRegistrationLogin/vendorLogin";
 import { VendorAddProduct } from "./component/vendorDashBoard/vendoAddProduct";
 import { FormDemo } from "./component/formDemo";
+import { VendorNavbar } from "./component/vendorDashBoard/vendor.navbar";
+import { VendorOpertion } from "./component/vendorOperation/vendorOperation";
+import { VendorDetails } from "./component/vendorOperation/vendorDetails";
+import { VendorUpdateDetails } from "./component/vendorOperation/vendorUpdateDetails";
+import { VendorSidebar } from "./component/vendorOperation/VendorSideBar";
 
 
 
@@ -34,10 +39,13 @@ function App() {
           <Route path="/product/:id" element={<><Navbar /><SingleProduct /></>} />
           <Route path="/rate-product/:id" element={<><Navbar /> <RateProduct /></>} />
           <Route path="/cart" element={<><Navbar /><CartPage /></>} />
-          <Route path="/vendor/registration" element={<><VendorRegistration/></>} ></Route>
-          <Route path="/vendor/login"element= {<VendorLogin/>} />
-          <Route path="/vendor/add-product" element = {<VendorAddProduct/>} />
-          <Route path = '/test' element = {<FormDemo/>} />
+          <Route path="/vendor/registration" element={<><VendorRegistration /></>} ></Route>
+          <Route path="/vendor/login" element={<VendorLogin />} />
+          <Route path="/vendor" element={<><VendorNavbar/><VendorSidebar/></>} />
+          <Route path="/vendor/details" element={<><VendorDetails /></>} />
+          <Route path="/vendor/update-details" element={<><VendorUpdateDetails /></>} />
+          <Route path="/vendor/add-product" element={<VendorAddProduct />} />
+
         </Routes>
 
       </BrowserRouter>

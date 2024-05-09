@@ -1,0 +1,20 @@
+import { VendorSidebar } from './VendorSideBar';
+import './vendor.css';
+
+
+
+
+
+export function VendorOpertion() {
+
+
+    return (
+        <>
+            <div className='vendor-full-page'>
+                <div className='side-bar'>
+                    <VendorSidebar />
+                </div>
+            </div>
+        </>
+    )
+}
