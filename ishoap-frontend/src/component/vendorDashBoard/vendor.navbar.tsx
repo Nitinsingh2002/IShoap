@@ -43,7 +43,7 @@ export function VendorNavbar() {
                 <Link to="" className='user-info-nav'>
                     <div className='detail' ><i className="bi bi-house-door-fill"></i>Home</div>
                 </Link>
-                <Link to="" className='user-info-nav'>
+                <Link to="/vendor/details" className='user-info-nav'>
                     <div className='detail ' ><i className="bi bi-person-circle"></i>
                         {decodedToken ? decodedToken.name : "User"}
                     </div>

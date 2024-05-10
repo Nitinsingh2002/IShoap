@@ -41,10 +41,16 @@ function App() {
           <Route path="/cart" element={<><Navbar /><CartPage /></>} />
           <Route path="/vendor/registration" element={<><VendorRegistration /></>} ></Route>
           <Route path="/vendor/login" element={<VendorLogin />} />
-          <Route path="/vendor" element={<><VendorNavbar/><VendorSidebar/></>} />
-          <Route path="/vendor/details" element={<><VendorDetails /></>} />
-          <Route path="/vendor/update-details" element={<><VendorUpdateDetails /></>} />
-          <Route path="/vendor/add-product" element={<VendorAddProduct />} />
+
+
+
+          <Route path="/vendor" element={<><VendorNavbar /><VendorOpertion /></>}>
+
+            <Route path="details" element={<VendorDetails></VendorDetails>} />
+            <Route path="update-details" element={<VendorUpdateDetails />} />
+            <Route path="add-product" element={<VendorAddProduct />} />
+          </Route>
+
 
         </Routes>
 

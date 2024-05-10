@@ -163,4 +163,23 @@ export default class vendorRepository {
         }
     }
 
+
+    async getvendorDetails(userId) {
+        try {
+            const vendor = await vendorModel.findById(userId, { password: 0 });
+            if (!vendor) {
+                throw new NotFoundError("Vendor not found");
+            }
+            return vendor;
+
+        } catch (error) {
+            if (error instanceof NotFoundError) {
+                throw new NotFoundError(error.message)
+            } else {
+                throw new ApplicationError('something went wrong in fetching vendor details', 503);
+            }
+
+        }
+    }
+
 }

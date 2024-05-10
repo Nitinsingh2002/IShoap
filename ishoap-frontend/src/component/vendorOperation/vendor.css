@@ -1,6 +1,36 @@
-.vendor-full-page{
-    height: 100vh;
-    background-color: red;
+.vendor-full-page {
+    margin-top: 2rem;
     width: 90%;
     margin: auto;
+    display: flex;
+    justify-content: space-between;
+    height: 84vh;
 }
+
+.side-bar {
+    width: 20%;
+    margin-top: 2rem;
+    height: 100%;
+}
+
+.vendor-content {
+    width: 78%;
+    padding-right: 1.5%;
+    padding-left: 1.5%;
+    
+    margin-top: 2rem;
+   padding-bottom: 1.5rem;
+    height: 100%;
+    overflow-y: scroll;
+}
+::-webkit-scrollbar{
+    display: none;
+}
+
+
+.navlinkactive{
+    background-color: aqua !important;
+    width: 100%;
+    color: red;
+}
+

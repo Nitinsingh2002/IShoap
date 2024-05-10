@@ -106,8 +106,9 @@ export function VendorAddProduct() {
         <>
             <div className='registerDiv'>
                 <ToastContainer />
-                <form onSubmit={formik.handleSubmit} className='register-form' encType="multipart/form-data" >
-                    <h2 className='register-h2'>Ishoap</h2>
+                <form onSubmit={formik.handleSubmit} className='address-form' encType="multipart/form-data" >
+                <h6 className=' fs-4'>Add product</h6>
+                <hr />
 
                     <div className='form-group mb-2'>
                         <label htmlFor="name">Product Name</label>

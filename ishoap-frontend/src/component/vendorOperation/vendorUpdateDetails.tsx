@@ -64,7 +64,7 @@ export function VendorUpdateDetails() {
         <>
             <ToastContainer />
             <form onSubmit={formik.handleSubmit} className='address-form'>
-                <h6 className='text-center fs-4'>Update details</h6>
+                <h6 className=' fs-4'>Update details</h6>
                 <hr />
                 <div className='form-group '>
                     <label htmlFor="name" className='mb-2'>Enter your Name</label>
