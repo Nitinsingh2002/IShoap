@@ -5,10 +5,10 @@ import { Button, Divider } from "@mui/material"
 import { Link } from "react-router-dom"
 import { useFetchApi } from "../../Custom-Hooks/useFetchApi"
 import { ToastContainer, toast } from "react-toastify"
-
+import { useNavigate } from "react-router-dom"
 
 export const VendorRegistration = () => {
-
+const nvigate = useNavigate();
     const fetchDataFromApi = useFetchApi();
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('name is required').min(2, 'name is tooo short').max(50, 'name is too long'),
@@ -44,6 +44,7 @@ export const VendorRegistration = () => {
                 toast.success('vendor registred sucessfully', {
                     autoClose: 1000
                 });
+                nvigate('/vendor/login');
             }
             resetForm();
         }

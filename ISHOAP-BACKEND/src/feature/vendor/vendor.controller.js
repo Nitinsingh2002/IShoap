@@ -85,13 +85,11 @@ export default class vendorController {
     }
 
 
-    async testController(req, res, next) {
+
+    async getSingleVendordetails(req, res, next) {
         try {
-            const name = req.body.name;
-            console.log(req.file)
-            const image = req.file.filename;
-            // console.log('in test contro', image);
-            const result = await this.vendorRepository.testRepo(name, image);
+            const userId = req.userId;
+            const result = await this.vendorRepository.getvendorDetails(userId);
             return res.status(201).send(result);
         } catch (error) {
             next(error)
@@ -99,11 +97,12 @@ export default class vendorController {
     }
 
 
-    async getSingleVendordetails(req, res, next) {
+    async getProduct(req, res, next) {
         try {
-            const userId = req.userId;
-            const result = await this.vendorRepository.getvendorDetails(userId);
-            return res.status(201).send(result);
+            const vendorid = req.userId;
+          
+            const result = await this.vendorRepository.getAllproductsofVendor(vendorid);
+            return res.status(201).send(result)
         } catch (error) {
             next(error)
         }

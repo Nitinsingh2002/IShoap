@@ -5,7 +5,8 @@ import vendorModel from "./vendor.schema.js";
 import NotFoundError from "../../../Error/notFound.error.js";
 import adminmodel from "../admin/admin.schema.js";
 import pendingProductModel from "./pending.product.schema.js";
-import testModel from '../vendor/test.schema.js';
+
+import ProductModel from "../products/product.schema.js";
 
 
 export default class vendorRepository {
@@ -149,19 +150,6 @@ export default class vendorRepository {
     }
 
 
-    async testRepo(name, image) {
-        try {
-            const resut = new testModel({
-                name: name,
-                image: image
-            })
-
-            const savedResult = await resut.save()
-            return savedResult;
-        } catch (error) {
-            throw new ApplicationError("Something went wrong adding test", 503)
-        }
-    }
 
 
     async getvendorDetails(userId) {
@@ -179,6 +167,28 @@ export default class vendorRepository {
                 throw new ApplicationError('something went wrong in fetching vendor details', 503);
             }
 
+        }
+    }
+
+
+    async getAllproductsofVendor(vendorId) {
+        try {
+            const vendor = await vendorModel.findById(vendorId);
+            if (!vendor) {
+                throw new NotFoundError('Vendor not found');
+            }
+            const vendorProducts = await ProductModel.find({ vendorId: vendorId });
+            if (!vendorProducts) {
+                throw new NotFoundError('Products not found');
+            } else {
+                return vendorProducts;
+            }
+        } catch (error) {
+            if (error instanceof NotFoundError) {
+                throw new NotFoundError(error.message)
+            } else {
+                throw new ApplicationError('something went wrong in fetching product related to vendor', 503);
+            }
         }
     }
 

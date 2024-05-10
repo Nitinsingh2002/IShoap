@@ -7,10 +7,11 @@ import { error } from 'console'
 import { ToastContainer, toast } from 'react-toastify'
 import { Button } from '@mui/material'
 import { useCookies } from "react-cookie";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 export const VendorLogin = () => {
+    const navigate = useNavigate();
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
     const fetchDataFromApi = useFetchApi();
     const validationSchema = Yup.object().shape({
@@ -24,9 +25,11 @@ export const VendorLogin = () => {
             password: ''
         },
         validationSchema: validationSchema,
-        onSubmit: async (formData,{resetForm}) => {
+        onSubmit: async (formData, { resetForm }) => {
+            const expirationTime = new Date();
+            expirationTime.setTime(expirationTime.getTime() + (4 * 60 * 60 * 1000));
             const { email, password } = formData;
-            console.log(email,password)
+            console.log(email, password)
             const result = await fetchDataFromApi({
                 url: 'http://localhost:8000/vendor/login',
                 method: 'POST',
@@ -37,8 +40,11 @@ export const VendorLogin = () => {
                     autoClose: 1000
                 });
             } else {
-                setCookie('token', result.response);
+                setCookie('token', result.response, {
+                    expires: expirationTime
+                });
                 resetForm();
+                navigate('/vendor');
             }
 
         }

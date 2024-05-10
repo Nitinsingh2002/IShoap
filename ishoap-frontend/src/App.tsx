@@ -21,6 +21,7 @@ import { VendorOpertion } from "./component/vendorOperation/vendorOperation";
 import { VendorDetails } from "./component/vendorOperation/vendorDetails";
 import { VendorUpdateDetails } from "./component/vendorOperation/vendorUpdateDetails";
 import { VendorSidebar } from "./component/vendorOperation/VendorSideBar";
+import { VendorProduct } from "./component/vendorDashBoard/vendorProducts";
 
 
 
@@ -43,13 +44,15 @@ function App() {
           <Route path="/vendor/login" element={<VendorLogin />} />
 
 
-
-          <Route path="/vendor" element={<><VendorNavbar /><VendorOpertion /></>}>
-
-            <Route path="details" element={<VendorDetails></VendorDetails>} />
-            <Route path="update-details" element={<VendorUpdateDetails />} />
-            <Route path="add-product" element={<VendorAddProduct />} />
+          <Route path="/vendor" element={<VendorNavbar />}>
+            <Route index element={<VendorProduct />} />
+            <Route path="/vendor" element={<VendorOpertion />}>
+              <Route path="details" element={<VendorDetails></VendorDetails>} />
+              <Route path="update-details" element={<VendorUpdateDetails />} />
+              <Route path="add-product" element={<VendorAddProduct />} />
+            </Route>
           </Route>
+
 
 
         </Routes>

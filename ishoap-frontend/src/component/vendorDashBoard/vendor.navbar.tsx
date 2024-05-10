@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { jwtDecode } from "jwt-decode";
@@ -20,13 +20,14 @@ export function VendorNavbar() {
 
     const handleLogout = (): void => {
         removeCookie('token');
+        navigate('/vendor/login');
     }
     console.log(decodedToken)
 
     useEffect(() => {
 
         if (!token) {
-            navigate("/login")
+            navigate("/vendor/login")
         } else {
             const decode: any = jwtDecode(token);
             setDecodedToken(decode);
@@ -34,13 +35,14 @@ export function VendorNavbar() {
     }, [token])
 
     return (
+      <>
         <nav>
             <div className='Brand'>
-                <h2><Link style={{ textDecoration: "none" }} to={"/"}>Ishoap</Link></h2>
+                <h2><Link style={{ textDecoration: "none" }} to={"/vendor"}>Ishoap</Link></h2>
             </div>
 
             <div className={menu ? 'navbar-details showMenu' : 'navbar-details'}>
-                <Link to="" className='user-info-nav'>
+                <Link to="/vendor" className='user-info-nav'>
                     <div className='detail' ><i className="bi bi-house-door-fill"></i>Home</div>
                 </Link>
                 <Link to="/vendor/details" className='user-info-nav'>
@@ -63,5 +65,7 @@ export function VendorNavbar() {
                 }
             </div>
         </nav>
+        <Outlet/>
+      </>
     )
 }
