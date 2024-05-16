@@ -17,7 +17,7 @@ export function VendorSidebar() {
     const location = useLocation();
 
 
-
+    const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
     const LoadVendorDetails = async () => {
         const result = await fetchDataFromApi({
@@ -45,26 +45,33 @@ export function VendorSidebar() {
         <>
             <div className="sidebar">
 
+                <div className="responsive-user-info" onClick={() => setShowSidebar(!showSidebar)}>
+                    {
+                        showSidebar ? (<i className="bi bi-x-circle"></i>) : <i className="bi bi-border-width"></i>
+                    }
+
+                </div>
+
+
                 <div className="gretting">
                     <p>Hello,</p>
                     <h5>{vendorData?.name}</h5>
                 </div>
 
-                <div className="account-details">
-                    <h5> <span className="bi bi-person-fill me-2 text-primary fs-3"></span>vendor details</h5>
-                    <p className={location.pathname === "/vendor/details" ? "active" : ""}><NavLink to="/vendor/details" style={{ textDecoration: 'none', color: 'inherit' }}>Profile information</NavLink>
-                    </p>
-
-                    <p className={location.pathname === "/vendor/update-details" ? "active" : ""}><NavLink to="/vendor/update-details" style={{ textDecoration: 'none', color: 'inherit' }}>
-                        Update Profile</NavLink>
-                    </p>
-                    <p className={location.pathname === "/vendor/add-product" ? "active" : ""}>
-                        <NavLink to="/vendor/add-product" style={{ width: '100%', textDecoration: 'none', color: 'inherit' }}>
-                            Add Product
-                        </NavLink>
-                    </p>
-
-                    
+                <div className={showSidebar ? "active-sidebar" : "user-info-sidebarr"}>
+                    <div className="account-details">
+                        <h5> <span className="bi bi-person-fill me-2 text-primary fs-3"></span>vendor details</h5>
+                        <p className={location.pathname === "/vendor/details" ? "active" : ""}><NavLink to="/vendor/details" style={{ textDecoration: 'none', color: 'inherit' }}>Profile information</NavLink>
+                        </p>
+                        <p className={location.pathname === "/vendor/update-details" ? "active" : ""}><NavLink to="/vendor/update-details" style={{ textDecoration: 'none', color: 'inherit' }}>
+                            Update Profile</NavLink>
+                        </p>
+                        <p className={location.pathname === "/vendor/add-product" ? "active" : ""}>
+                            <NavLink to="/vendor/add-product" style={{ width: '100%', textDecoration: 'none', color: 'inherit' }}>
+                                Add Product
+                            </NavLink>
+                        </p>
+                    </div>
                 </div>
 
             </div>
