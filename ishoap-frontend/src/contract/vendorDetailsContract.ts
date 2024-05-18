@@ -1,7 +1,8 @@
 
 
-export interface VendorDetails{
-    name:string,
-    email:string,
-    mobile?:string
+export interface VendorDetails {
+    _id?: string,
+    name: string,
+    email: string,
+    mobile?: string
 }

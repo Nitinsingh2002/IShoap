@@ -14,6 +14,8 @@ export default class adminController {
 
             const admin = await this.adminRepository.adminSignIn(email);
 
+
+            
             if (password === admin.password) {
                 const token = jwt.sign({
                     userId: admin.id,

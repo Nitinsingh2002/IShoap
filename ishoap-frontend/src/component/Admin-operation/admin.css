@@ -1,0 +1,10 @@
+
+
+/* this is for loading div  */
+
+.loading-div{
+  height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

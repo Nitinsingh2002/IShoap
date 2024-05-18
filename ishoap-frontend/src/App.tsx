@@ -22,6 +22,9 @@ import { VendorDetails } from "./component/vendorOperation/vendorDetails";
 import { VendorUpdateDetails } from "./component/vendorOperation/vendorUpdateDetails";
 import { VendorSidebar } from "./component/vendorOperation/VendorSideBar";
 import { VendorProduct } from "./component/vendorDashBoard/vendorProducts";
+import { AdminNavbar } from "./component/Admin-operation/AdminNavbar";
+import { AdminDashboard } from "./component/Admin-operation/AdminDashboar";
+import { AdminAddProduct } from "./component/Admin-operation/Admin-add-product";
 
 
 
@@ -34,7 +37,7 @@ function App() {
           <Route path="/" element={<><Navbar /><Main /><Footer /></>} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Userlogin />} />
-          <Route path="/admin-login" element={<AdminLogin />}></Route>
+          <Route path="/admin/login" element={<AdminLogin />}></Route>
           <Route path="/user-info" element={<> <Navbar /> <UserInfo /></>} />
           <Route path="/product" element={<><Navbar /> <Product /> <Footer /></>} />
           <Route path="/product/:id" element={<><Navbar /><SingleProduct /></>} />
@@ -53,6 +56,11 @@ function App() {
             </Route>
           </Route>
 
+
+          {/* admin routes start fro here */}
+          <Route path="/admin" element={<><AdminNavbar /><AdminDashboard /></>}>
+            <Route path="add-product" element={<AdminAddProduct />} />
+          </Route>
 
 
         </Routes>

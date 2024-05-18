@@ -8,13 +8,16 @@ import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 
 export function AdminLogin() {
 
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
     const [islogin, setIsLogin] = useState<boolean>(false)
-
+    const [error, setError] = useState<string>('')
+    const navigate = useNavigate();
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email("Invalid email address").required("Email is required"),
@@ -33,10 +36,10 @@ export function AdminLogin() {
                 const { email, password } = formData;
                 const response = await axios.post('http://localhost:8000/admin/login', { email, password })
                 setCookie('token', response.data)
-                toast.success("Login sucessfull !")
+                navigate("/admin");
             } catch (error) {
                 if (axios.isAxiosError(error) && error.response) {
-                    toast.error(error.response.data)
+                    setError(error.response.data);
                 } else {
                     toast.error("something went wrong in user login")
                 }
@@ -49,7 +52,8 @@ export function AdminLogin() {
     return (
 
         <>
-            <ToastContainer />
+
+
             <form onSubmit={formik.handleSubmit} className="login-form">
                 <h2 className="text-center mb-2 pt-2">Admin Login</h2>
 
@@ -78,13 +82,17 @@ export function AdminLogin() {
                 </div>
 
                 <div className='form-group mb-2 mt-3'>
-                    <Button variant="contained" type='submit' className='form-control' disabled={islogin}>Login</Button>
+                    <Button variant="contained" type='submit' className='w-100' disabled={islogin}>Login</Button>
                 </div>
 
-                <div className="form-group mb-2">
-                    <button className="btn btn-link form-control text-center">Don't have an account? Register</button>
-                </div>
+                {
+                    error && <div className="w-100 text-center text-danger"> {error}</div>
+                }
+
             </form>
+
+
+
         </>
     );
 }
