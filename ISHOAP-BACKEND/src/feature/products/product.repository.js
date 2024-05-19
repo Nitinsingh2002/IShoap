@@ -111,8 +111,12 @@ export default class productRepository {
 
 
 
-    async updateProduct(adminId, id, name, price, description, stock, vendorId, categoryId, image) {
+    async updateProduct(adminId, id, name, price, description, stock,) {
         try {
+
+            if (!name || !price || !description || !stock) {
+                throw new ValidationError('Please fill all the fields');
+            }
             const admin = await adminmodel.findById(adminId);
             if (!admin) {
                 throw new NotFoundError("admin not found")
@@ -121,24 +125,16 @@ export default class productRepository {
             const product = await ProductModel.findById(id)
             if (!product) {
                 throw new NotFoundError("product not found")
-            } else {
-                await Promise.all(product.image.map(async (imageName) => {
-                    const filePath = path.resolve(__dirname, 'public', 'images', imageName)
-                    await fs.promises.unlink(filePath);
-                }))
             }
 
             const result = await ProductModel.updateOne({ _id: id }, {
                 name: name,
                 price: price,
                 description: description,
-                stock: stock,
-                vendorId: vendorId,
-                categoryId: categoryId,
-                image: image
+                stock: stock
             })
 
-            if (result.acknowledged === 1) {
+            if (result.acknowledged === true) {
                 return result;
             } else {
                 throw new NotFoundError("Failed to update product or you are not authorized")
@@ -146,6 +142,8 @@ export default class productRepository {
         } catch (error) {
             if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
+            } else if (error instanceof ValidationError) {
+                throw new ValidationError(error.message, 422);
             } else {
                 throw new ApplicationError("something went wrong in updating product", 503)
             }

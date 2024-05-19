@@ -25,6 +25,7 @@ import { VendorProduct } from "./component/vendorDashBoard/vendorProducts";
 import { AdminNavbar } from "./component/Admin-operation/AdminNavbar";
 import { AdminDashboard } from "./component/Admin-operation/AdminDashboar";
 import { AdminAddProduct } from "./component/Admin-operation/Admin-add-product";
+import { AdminAllProductList } from "./component/Admin-operation/Admin-all-product-list";
 
 
 
@@ -60,6 +61,7 @@ function App() {
           {/* admin routes start fro here */}
           <Route path="/admin" element={<><AdminNavbar /><AdminDashboard /></>}>
             <Route path="add-product" element={<AdminAddProduct />} />
+            <Route path="all-product" element={<AdminAllProductList />} />
           </Route>
 
 

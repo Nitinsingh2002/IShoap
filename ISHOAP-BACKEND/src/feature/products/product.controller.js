@@ -39,9 +39,8 @@ export default class productController {
         try {
             const adminId = req.userId
             const id = req.params.id
-            const { name, price, description, stock, vendorId, categoryId } = req.body
-            const image = req.files.map(file => file.filename);
-            await this.productRepository.updateProduct(adminId, id, name, price, description, stock, vendorId, categoryId, image)
+            const { name, price, description, stock } = req.body
+            await this.productRepository.updateProduct(adminId, id, name, price, description, stock)
             return res.status(200).send("product updated sucessfully")
         } catch (error) {
             next(error)

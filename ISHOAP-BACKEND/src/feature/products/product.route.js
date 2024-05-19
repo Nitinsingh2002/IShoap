@@ -18,8 +18,8 @@ prdocutRoutes.delete("/remove-product/:id", jwtauth, (req, res, next) => {
     ProductController.delete(req, res, next)
 })
 
-
-prdocutRoutes.put("/update-product/:id", jwtauth, uploadFile.array('image', 4), imageValidationMiddleware, (req, res, next) => {
+//   route to update product
+prdocutRoutes.put("/update-product/:id", jwtauth, (req, res, next) => {
     ProductController.update(req, res, next)
 })
 

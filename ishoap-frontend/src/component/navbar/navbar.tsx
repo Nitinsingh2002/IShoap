@@ -54,7 +54,9 @@ export function Navbar() {
                     <Link to="/product" className='user-info-nav'>
                         <div className='detail'><i className="bi bi-speaker-fill"></i>Products</div>
                     </Link>
-                    <div className='detail'><i className="bi bi-basket-fill"></i>cart</div>
+                    <Link to='/cart' className='user-info-nav'>
+                        <div className='detail'><i className="bi bi-basket-fill"></i>cart</div>
+                    </Link>
                     <div className='detail' onClick={handleLogout}><i className="bi bi-box-arrow-in-right"></i>Logout</div>
                 </div>
 

@@ -62,8 +62,8 @@ export function AdminSidebar() {
                         </p>
 
 
-                        <p className={location.pathname === "/vendor/details" ? "active" : ""}>
-                            <NavLink to="/vendor/details"
+                        <p className={location.pathname === "/admin/all-product" ? "active" : ""}>
+                            <NavLink to="/admin/all-product"
                                 style={{ textDecoration: 'none', color: 'inherit' }}>
                                 All Product
                             </NavLink>
