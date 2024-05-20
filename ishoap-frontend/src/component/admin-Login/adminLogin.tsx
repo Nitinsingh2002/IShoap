@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 export function AdminLogin() {
 
-    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+    const [cookies, setCookie, removeCookie] = useCookies(['token', 'role']);
     const [islogin, setIsLogin] = useState<boolean>(false)
     const [error, setError] = useState<string>('')
     const navigate = useNavigate();
@@ -33,9 +33,13 @@ export function AdminLogin() {
         onSubmit: async (formData) => {
             setIsLogin(true)
             try {
+                const expirationTime = new Date();
+                expirationTime.setTime(expirationTime.getTime() + (4 * 60 * 60 * 1000));
                 const { email, password } = formData;
                 const response = await axios.post('http://localhost:8000/admin/login', { email, password })
-                setCookie('token', response.data)
+                setCookie('token', response.data, { expires: expirationTime, path: '/' });
+                setCookie('role', 'admin', { expires: expirationTime, path: '/' });
+
                 navigate("/admin");
             } catch (error) {
                 if (axios.isAxiosError(error) && error.response) {

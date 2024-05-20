@@ -294,4 +294,33 @@ export default class productRepository {
             }
         }
     }
+
+
+
+
+    async modifiedStock(productId, stock) {
+        try {
+            const product = await ProductModel.findById(productId);
+            if (!product) {
+                throw new NotFoundError("product not found");
+            }
+            const result = await ProductModel.updateOne({ _id: productId }, {
+                stock: stock
+            })
+            if (result.acknowledged === true) {
+                return result;
+            } else {
+                throw new ValidationError("Failed to update product or you are not authorized")
+            }
+
+        } catch (error) {
+            if (error instanceof NotFoundError) {
+                throw new NotFoundError(error.message);
+            } else if (error instanceof ValidationError) {
+                throw new NotFoundError(error.message, 422)
+            } else {
+                throw new ApplicationError('something went wrong in updating product');
+            }
+        }
+    }
 }

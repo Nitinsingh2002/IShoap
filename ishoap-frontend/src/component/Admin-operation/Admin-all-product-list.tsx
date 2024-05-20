@@ -15,6 +15,8 @@ export function AdminAllProductList() {
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>()
     const [disabled, setDisabled] = useState<boolean>(false);
+   
+
 
     const navigate = useNavigate();
 
@@ -87,6 +89,7 @@ export function AdminAllProductList() {
             navigate('/admin/login')
         } else {
             loadAllproduct();
+        
         }
     }, [])
 

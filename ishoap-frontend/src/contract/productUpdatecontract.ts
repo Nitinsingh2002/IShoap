@@ -1,6 +1,6 @@
 export interface UpdateProducContract{
     name:string,
     description:string,
-    price:string,
+    price:number,
     stock:number
 }

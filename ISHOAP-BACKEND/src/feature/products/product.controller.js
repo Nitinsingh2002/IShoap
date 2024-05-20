@@ -104,5 +104,17 @@ export default class productController {
             next(error)
         }
     }
+
+
+    async updateStock ( req,res,next) {
+        try {
+            const {stock} = req.body;
+            const productId = req.params.id;;
+            await this.productRepository.modifiedStock(productId,stock);
+            return res.status(201).send("Stock updated sucessfully");
+        } catch (error) {
+          next(error)  
+        }
+    }
 }
 

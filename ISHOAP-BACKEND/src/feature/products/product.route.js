@@ -45,6 +45,10 @@ prdocutRoutes.get("/filter-product", (req, res, next) => {
     ProductController.filter(req, res, next)
 })
 
+prdocutRoutes.put('/update-stock/:id',jwtauth,(req,res,next) =>{
+    ProductController.updateStock(req,res,next)
+})
+
 export default prdocutRoutes;
 
 

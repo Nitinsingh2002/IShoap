@@ -4,6 +4,8 @@ import './adminProductCard.css';
 import { ReusableModal } from '../Resuable-modal/ReuasbleModal';
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { Style } from '@mui/icons-material';
 
 
 interface AdmincardProps {
@@ -18,20 +20,17 @@ export const AdminProductCard = ({ productList, deleteProduct, updateProduct, di
     const [deletedProductId, setDeleteProductId] = useState<string>();
 
     const handleDeleteClick = (id: string): void => {
-        console.log("handle delete function called")
         setIsModalOpen(true);
         setDeleteProductId(id);
     };
 
     const handleCloseModal = (): void => {
-        console.log('close modal function called')
         setIsModalOpen(false);
         setDeleteProductId("");
     };
 
 
     const handleConfirmDelete = (): void => {
-        console.log("confirm delete function called")
         if (deletedProductId) {
             deleteProduct(deletedProductId);
         }
@@ -39,51 +38,55 @@ export const AdminProductCard = ({ productList, deleteProduct, updateProduct, di
         setDeleteProductId('');
     };
 
-    
+    console.log(productList);
+
     return (
         <>
             <ToastContainer />
 
             {
                 productList.map((product) => (
-                    <div key={product._id} className='admin-product-container'>
+                    <Link to={`/product/${product._id}`} style={{textDecoration:'none', color:'inherit'}}>
+                        <div key={product._id} className='admin-product-container'>
 
-                        <div className='admin-product-img'>
-                            <img src={`http://localhost:8000/images/${product.image[0]}`} />
+
+                            <div className='admin-product-img'>
+                                <img src={`http://localhost:8000/images/${product.image[0]}`} />
+                            </div>
+
+                            <div className='admin-product-details'>
+                                <h5 className='admin-product-name'>{product.name}</h5>
+                                <div><span className='fw-bold admin-price'>Price : </span>
+                                    {product.price.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}
+                                </div>
+
+                                <div>
+                                    Available :
+                                    {
+                                        product.stock > 0 ? <span > In Stock</span> : <span className="text-danger">Out of  Stock</span>
+                                    }
+                                </div>
+
+                                <div>
+                                    Rating : <span>{product.rating.rate} <span className='bi bi-star-fill' style={{ color: 'yellow' }}></span></span>
+                                </div>
+
+                            </div>
+
+                            <div className='admin-product-operation'>
+                                <div>
+                                    <Link to={`/admin/update-product/${product._id}`}> <Button variant='outlined'>Update</Button></Link>
+                                </div>
+                                <div>
+                                    <Button variant='outlined' color='error' onClick={() => { handleDeleteClick(product._id) }}>Delete</Button>
+
+                                </div>
+
+                            </div>
+
+
                         </div>
-
-                        <div className='admin-product-details'>
-                            <h5 className='admin-product-name'>{product.name}</h5>
-                            <div><span className='fw-bold admin-price'>Price : </span>
-                                <span className='actual-price'>{product.price.toLocaleString('en-In', { style: 'currency', currency: 'INR' })}</span>
-                            </div>
-
-                            <div>
-                                Available :
-                                {
-                                    product.stock > 0 ? <span > In Stock</span> : <span className="text-danger">Out of  Stock</span>
-                                }
-                            </div>
-
-                            <div>
-                                Rating : <span>{product.rating.rate} <span className='bi bi-star-fill' style={{ color: 'yellow' }}></span></span>
-                            </div>
-
-                        </div>
-
-                        <div className='admin-product-operation'>
-                            <div>
-                                <Button variant='outlined'>Update</Button>
-                            </div>
-                            <div>
-                                <Button variant='outlined' color='error' onClick={() => { handleDeleteClick(product._id) }}>Delete</Button>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
+                    </Link>
 
 
                 ))
