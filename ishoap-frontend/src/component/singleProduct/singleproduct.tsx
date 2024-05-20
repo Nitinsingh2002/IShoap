@@ -6,10 +6,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import './singleproduct.css'
-import { Button } from "@mui/material";
+import { Button, ButtonBase } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Link } from "react-router-dom";
 import Loadingcomponent from "../Loading/Loading";
+import { ReusableModal } from "../Resuable-modal/ReuasbleModal";
 
 export function SingleProduct() {
     const [produtDetails, setProductDetaiils] = useState<ProductDetails>();
@@ -21,9 +22,18 @@ export function SingleProduct() {
     const navigate = useNavigate();
     const [currentImg, setCurrentImg] = useState<number>(0);
     const [quantity, setquantity] = useState<number>(1);
-    const [cookiesLoaded, setCookiesLoaded] = useState(false);
     const [loading, setLoading] = useState<boolean>(true);
+    const [stockvalue, setStockValue] = useState<number>(0);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [error, setError] = useState<string>();
 
+
+    const handleDeleteClick = (): void => {
+        setIsModalOpen(true);
+    };
+    const handleCloseModal = (): void => {
+        setIsModalOpen(false);
+    };
 
     const handleSelectImage = (index: number): void => {
         console.log("state is updated")
@@ -40,8 +50,10 @@ export function SingleProduct() {
         console.log("api called");
         if (result.error) {
             toast.error("something went wrong in loading product details");
+            setError(result.error);
         } else {
             setProductDetaiils(result.response);
+            setStockValue(result.response.stock);
         }
         setLoading(false)
     }
@@ -77,10 +89,55 @@ export function SingleProduct() {
     }
 
 
+    const handleaddstock = () => {
+        setStockValue(stockvalue + 1);
+    }
+
+    const handlesubstractstock = () => {
+        if (1 < stockvalue) {
+            setStockValue(stockvalue - 1)
+        }
+    }
+
+
+    const updateStock = async () => {
+        const result = await fetchDataFromApi({
+            url: `http://localhost:8000/product/update-stock/${id}`,
+            method: "put",
+            token: token,
+            data: { stock: stockvalue }
+        })
+
+        if (result.error) {
+            toast.error(result.error, { autoClose: 1000 })
+        } else {
+            toast.success("stock updated sucessfully ..", {
+                autoClose: 1000
+            })
+        }
+    }
+
+    const handleConfirmDelete = async (id: string) => {
+        setIsModalOpen(false)
+        const result = await fetchDataFromApi({
+            url: `http://localhost:8000/product/remove-product/${id}`,
+            method: 'delete',
+            token: token
+        })
+        if (result.error) {
+            toast.error(result.error, {
+                autoClose: 1000
+            })
+        } else {
+            toast.success("product deleted sucessfully", { autoClose: 1000 });
+            navigate('/admin/all-product');
+        }
+    }
+
 
     useEffect(() => {
         if (!token) {
-             navigate('/login')
+            navigate('/login')
         } else {
             loadProductDetails();
         }
@@ -94,6 +151,11 @@ export function SingleProduct() {
                 loading ? (
                     <div className="text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
                         <Loadingcomponent />
+                    </div>
+                ) : error ? (
+                    <div className="text-center product-not-found-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', flexDirection: 'column' }}>
+                        <h2 className="product-not-found-message" style={{ color: '#ff6347', fontSize: '2rem', fontWeight: 'bold', margin: '20px 0' }}>Product Not Found</h2>
+                        <p style={{ color: '#555', fontSize: '1rem' }}>We're sorry, but the product you are looking for does not exist.</p>
                     </div>
                 ) :
                     (
@@ -126,11 +188,13 @@ export function SingleProduct() {
                                 <div className="product_rating_container">
                                     <div className="rating_container_button">{produtDetails?.rating.rate} <i className="bi bi-star-fill star" /></div>
                                     <p className="product-rating-count">{produtDetails?.rating.count}  Ratings</p>
-                                    <p className="product-rating-count text-primary">
-                                        <Link to={`/rate-product/${id}`} style={{ textDecoration: "none" }}>
-                                            Rate product
-                                        </Link>
-                                    </p>
+                                    {
+                                        role !== 'admin' && <p className="product-rating-count text-primary">
+                                            <Link to={`/rate-product/${id}`} style={{ textDecoration: "none" }}>
+                                                Rate product
+                                            </Link>
+                                        </p>
+                                    }
                                 </div>
 
                                 <div className="price-container">
@@ -206,7 +270,7 @@ export function SingleProduct() {
                                 <hr className="availablehr" />
 
 
-                                {role !== 'admin' && (
+                                {role === 'user' ? (
 
                                     <>
                                         <p className="last-cont-para">Select qunatity : </p>
@@ -222,15 +286,39 @@ export function SingleProduct() {
                                             </Button>
                                         </div>
                                     </>
-                                )
+                                ) :
+                                    (
+                                        <>
+                                            <div className="update-stock">
+                                                <p className="update-stock-para">Update stock</p>
+                                                <div className="prodduct-quantity">
+                                                    <button className="quantity-button me-2" onClick={handleaddstock}> + </button>
+                                                    <span className="quantity-button text-primary">{stockvalue} </span>
+                                                    <button className="quantity-button ms-2" onClick={handlesubstractstock}> -</button>
+                                                </div>
+                                                <Button variant="contained" onClick={updateStock}>Update stock</Button>
+                                            </div>
+                                            <hr className="PE" />
+                                            <Button variant="contained" color="error" className="PE" onClick={handleDeleteClick}>
+                                                Delete product
+                                            </Button>
+                                            {produtDetails && (
+                                                <ReusableModal
+                                                    isOpen={isModalOpen}
+                                                    onClose={handleCloseModal}
+                                                    onConfirm={() => handleConfirmDelete(produtDetails._id)}
+                                                    message="Are you sure to delete this Product from the Ishoap?"
+                                                />
+                                            )}
+                                        </>
+                                    )
                                 }
-
-
-
                             </div>
                         </div>
                     )
             }
+
+
 
         </>
     )

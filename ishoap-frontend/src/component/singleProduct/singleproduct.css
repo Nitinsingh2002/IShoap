@@ -6,6 +6,7 @@
     display: flex;
     box-shadow: 0px 4px 2px gray;
     justify-content: space-between;
+    padding-bottom: 1rem;
 }
 
 .first-half {
@@ -162,7 +163,19 @@
     justify-content: space-between;
     align-content: center;
 }
-
+.update-stock{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;padding-right: 1rem;
+    align-items: center;
+}
+.update-stock-para{
+    margin: 0%;
+    padding: 0%;
+    font-weight: bold;
+    font-size: large;
+    color: gray;
+}
 .warrenty-icon-container {
     display: flex;
     justify-content: center;
@@ -204,7 +217,10 @@
     border-top: 2px solid rgb(0, 0, 0);
     margin-right: 1rem;
 }
-
+.PE{
+    width: calc(100% - 1rem);
+    margin-right: 1rem; 
+}
 .last-container {
     display: flex;
     justify-content: space-between;
