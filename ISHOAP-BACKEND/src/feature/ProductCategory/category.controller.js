@@ -61,4 +61,16 @@ export default class categoryController {
             next(error)
         }
     }
+
+
+    async getSingleCategory(req, res, next) {
+        try {
+            const adminId = req.userId;
+            const id = req.params.id;
+            const resut = await this.categoryRepository.getcategoryDetails(id,adminId);
+            return res.status(201).send(resut);
+        } catch (error) {
+            next(error)
+        }
+    }
 }

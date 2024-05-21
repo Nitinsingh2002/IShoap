@@ -25,12 +25,12 @@ export default class categoryRepository {
             }
 
         } catch (error) {
-        
+
             if (error instanceof mongoose.Error.ValidationError) {
                 const firstErrorMessage = Object.values(error.errors)[0].message;
                 throw new ValidationError(firstErrorMessage, 422);
-            }else if(error.code === 11000){
-                throw new ValidationError('category with same name already peresent',422)
+            } else if (error.code === 11000) {
+                throw new ValidationError('category with same name already peresent', 422)
             }
             else if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
@@ -113,8 +113,32 @@ export default class categoryRepository {
             console.log(error)
             if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
+            } else {
+                throw new ApplicationError("something went wrong in getting category", 503)
             }
-            throw new ApplicationError("something went wrong in getting category", 503)
+
         }
     }
+
+
+    async getcategoryDetails(id, adminId) {
+        try {
+            const admin = await adminmodel.findById(adminId);
+            if (!admin) {
+                throw new NotFoundError("you are not authorized to delete category")
+            } const result = await CategoryModel.findById(id);
+              if(!result){
+                throw new NotFoundError("category details not found")
+              }else{
+                return result;
+              }
+
+            } catch (error) {
+                if (error instanceof NotFoundError) {
+                    throw new NotFoundError(error.message)
+                } else {
+                    throw new ApplicationError("something went wrong in getting category", 503)
+                }
+            }
+        }
 }

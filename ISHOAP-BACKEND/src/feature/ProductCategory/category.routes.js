@@ -26,5 +26,8 @@ categoryRoutes.get("/get-category-products/:id", (req, res, next) => {
     CategoryController.getproductsrelatedTocategory(req, res, next)
 })
 
+categoryRoutes.get("/get-category/:id",(req,res,next)=>{
+    CategoryController.getSingleCategory(req,res,next);
+})
 
 export default categoryRoutes;

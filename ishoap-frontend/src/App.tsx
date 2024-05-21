@@ -31,6 +31,7 @@ import { VendorList } from "./component/Admin-operation/ListOfAllVendor";
 import { UserList } from "./component/Admin-operation/listodAlluser";
 import { CategoryList } from "./component/Admin-operation/listOfAllCategory";
 import { AddCategory } from "./component/Admin-operation/add-category";
+import { UpdateCategory } from "./component/Admin-operation/Admin-update-category";
 
 
 
@@ -72,6 +73,7 @@ function App() {
             <Route path="all-user" element={<UserList />} />
             <Route path="all-category" element={<CategoryList />} />
             <Route path="add-category" element={<AddCategory />} />
+            <Route path="update-category/:id" element={<UpdateCategory />}/>
           </Route>
 
 

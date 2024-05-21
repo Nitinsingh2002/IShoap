@@ -2,8 +2,9 @@ import { useEffect, useState } from "react"
 import { useFetchApi } from "../../Custom-Hooks/useFetchApi"
 import { useCookies } from "react-cookie"
 import Loadingcomponent from "../Loading/Loading"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import './admin-vendor.css';
+import { Button } from "@mui/material"
 
 interface LoadInterfaceContract {
     _id: string,
@@ -63,8 +64,15 @@ export const CategoryList = () => {
                         {
                             allCategory?.map((single) => (
                                 <div key={single._id} className="admin-all-vendor">
-                                    <h6 className="pra">Name : <span>{single.name}</span></h6>
-                                    <p className="pra">Total products : <span>{single.products ? single.products.length : 0}</span></p>
+                                    <div>
+                                        <h6 className="pra">Name : <span>{single.name}</span></h6>
+                                        <p className="pra">Total products : <span>{single.products ? single.products.length : 0}</span></p>
+                                    </div>
+                                    <div>
+                                        <Link to={`/admin/update-category/${single._id}`}>
+                                        <Button variant="outlined" size="small">Update</Button>
+                                        </Link>
+                                    </div>
                                 </div>
                             ))
                         }
