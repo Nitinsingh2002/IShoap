@@ -3,7 +3,7 @@ import CategoryModel from "./category.schema.js";
 import NotFoundError from '../../../Error/notFound.error.js';
 import ValidationError from '../../../Error/validation.error.js'
 import adminmodel from "../admin/admin.schema.js";
-
+import mongoose from "mongoose";
 export default class categoryRepository {
 
 
@@ -25,10 +25,14 @@ export default class categoryRepository {
             }
 
         } catch (error) {
+        
             if (error instanceof mongoose.Error.ValidationError) {
                 const firstErrorMessage = Object.values(error.errors)[0].message;
                 throw new ValidationError(firstErrorMessage, 422);
-            } else if (error instanceof NotFoundError) {
+            }else if(error.code === 11000){
+                throw new ValidationError('category with same name already peresent',422)
+            }
+            else if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
             } else {
                 throw new ApplicationError("something went wrong inaading category", 503);
@@ -107,7 +111,7 @@ export default class categoryRepository {
 
         } catch (error) {
             console.log(error)
-            if(error instanceof NotFoundError){
+            if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
             }
             throw new ApplicationError("something went wrong in getting category", 503)
