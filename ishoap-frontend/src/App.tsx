@@ -29,6 +29,7 @@ import { AdminAllProductList } from "./component/Admin-operation/Admin-all-produ
 import { AdminUpdateProduct } from "./component/Admin-operation/admin-update-product";
 import { VendorList } from "./component/Admin-operation/ListOfAllVendor";
 import { UserList } from "./component/Admin-operation/listodAlluser";
+import { CategoryList } from "./component/Admin-operation/listOfAllCategory";
 
 
 
@@ -68,6 +69,7 @@ function App() {
             <Route path="update-product/:id" element={<AdminUpdateProduct />} />
             <Route path="all-vendor" element={<VendorList />} />
             <Route path="all-user" element={<UserList />} />
+            <Route path="all-category" element={<CategoryList />} />
           </Route>
 
 
