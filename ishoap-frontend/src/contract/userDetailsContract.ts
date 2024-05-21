@@ -2,6 +2,7 @@
 
 
 export interface UserDetails {
+    _id?: string,
     name: {
         firstName: string,
         lastName: string
