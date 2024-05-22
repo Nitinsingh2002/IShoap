@@ -323,4 +323,47 @@ export default class productRepository {
             }
         }
     }
+
+
+    async allPending(adminId) {
+        try {
+            const admin = await adminmodel.findById(adminId);
+            if (!admin) {
+                throw new NotFoundError("you are not authorized")
+            } else {
+                const result = await pendingProductModel.find({}).exec();
+                return result;
+            }
+        } catch (error) {
+            if (error instanceof NotFoundError) {
+                throw new NotFoundError(error.message)
+            } else {
+                throw new ApplicationError("something went wrong in fetching details of pending product", 503);
+            }
+        }
+    }
+
+    async singlePending(adminId, id) {
+        try {
+            const admin = await adminmodel.findById(adminId);
+            if (!admin) {
+                throw new NotFoundError("you are not authorized")
+            }
+
+            const product = await pendingProductModel.findById(id).populate('vendorId', { name: 1, _id: 1 }).exec();
+            if (!product) {
+                throw new NotFoundError("product not found")
+            } else {
+                return product;
+            }
+
+        } catch (error) {
+            console.log(error);
+            if (error instanceof NotFoundError) {
+                throw new NotFoundError(error.message)
+            } else {
+                throw new ApplicationError("something went wrong in fetching details of pending product", 503);
+            }
+        }
+    }
 }

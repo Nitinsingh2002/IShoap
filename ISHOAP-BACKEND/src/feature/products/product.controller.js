@@ -100,20 +100,43 @@ export default class productController {
             const result = await this.productRepository.filterProduct(minprice, maxPrice, category)
             return res.status(200).send(result)
         } catch (error) {
-            
+
             next(error)
         }
     }
 
 
-    async updateStock ( req,res,next) {
+    async updateStock(req, res, next) {
         try {
-            const {stock} = req.body;
+            const { stock } = req.body;
             const productId = req.params.id;;
-            await this.productRepository.modifiedStock(productId,stock);
+            await this.productRepository.modifiedStock(productId, stock);
             return res.status(201).send("Stock updated sucessfully");
         } catch (error) {
-          next(error)  
+            next(error)
+        }
+    }
+
+    async getAllPendingProduct(req, res, next) {
+        try {
+            const adminId = req.userId;
+            const result = await this.productRepository.allPending(adminId);
+            return res.status(201).send(result);
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getsinglePending(req, res, next) {
+        try {
+            const id = req.params.id;
+            const adminId = req.userId;
+            const result = await this.productRepository.singlePending(adminId,id);
+            return res.status(201).send(result);
+
+        } catch (error) {
+            next(error)
         }
     }
 }

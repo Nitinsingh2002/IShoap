@@ -106,7 +106,7 @@ const nvigate = useNavigate();
 
                 <Divider>OR</Divider>
 
-                <button className='btn btn-link  w-100 text-center'><Link to="/login">already have an account? login</Link></button>
+                <button className='btn btn-link  w-100 text-center'><Link to="/vendor/login">already have an account? login</Link></button>
             </form>
         </>
     )

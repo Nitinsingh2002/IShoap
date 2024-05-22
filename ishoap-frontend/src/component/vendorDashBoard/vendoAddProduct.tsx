@@ -22,10 +22,15 @@ export function VendorAddProduct() {
     }]);
     const [image, setImage] = useState<File[]>([]);
 
-    const handleimageChange = (e: any): void => {
-        setImage([...image, e.target.files[0]]);
-        formik.handleChange(e);
-    }
+
+    const handleImageChange = (index: number, e: React.ChangeEvent<HTMLInputElement>): void => {
+        if (e.target.files && e.target.files[0]) {
+            const newImages = [...image];
+            newImages[index] = e.target.files[0];
+            setImage(newImages);
+            formik.setFieldValue(`image[${index}]`, e.target.files[0]);
+        }
+    };
 
     console.log(image);
 
@@ -79,6 +84,11 @@ export function VendorAddProduct() {
                 })
             }
             resetForm();
+            setImage([]);
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+                const fileInput = input as HTMLInputElement;
+                fileInput.value = '';
+            });
         }
     });
 
@@ -107,8 +117,8 @@ export function VendorAddProduct() {
             <div className='registerDiv'>
                 <ToastContainer />
                 <form onSubmit={formik.handleSubmit} className='address-form' encType="multipart/form-data" >
-                <h6 className=' fs-4'>Add product</h6>
-                <hr />
+                    <h6 className=' fs-4'>Add product</h6>
+                    <hr />
 
                     <div className='form-group mb-2'>
                         <label htmlFor="name">Product Name</label>
@@ -176,13 +186,17 @@ export function VendorAddProduct() {
                         {formik.errors.description && formik.touched.description && <div className="text-danger"> {formik.errors.description}</div>}
                     </div>
 
-
                     <div className='mb-3'>
                         <label htmlFor="image" className='form-label'>Product Images</label>
-                        <input type='file' className='form-control mb-1' onChange={handleimageChange} name='image' />
-                        <input type='file' className='form-control mb-1' onChange={handleimageChange} name='image' />
-                        <input type='file' className='form-control mb-1' onChange={handleimageChange} name='image' />
-                        <input type='file' className='form-control mb-1' onChange={handleimageChange} name='image' />
+                        {[0, 1, 2, 3].map((index) => (
+                            <input
+                                key={index}
+                                type='file'
+                                className='form-control mb-1'
+                                onChange={(e) => handleImageChange(index, e)}
+                                name={`image[${index}]`}
+                            />
+                        ))}
                         {formik.errors.image && formik.touched.image && <div className='text-danger'> {formik.errors.image} </div>}
                     </div>
 

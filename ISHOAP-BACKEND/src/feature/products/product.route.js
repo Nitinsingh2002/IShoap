@@ -18,7 +18,7 @@ prdocutRoutes.delete("/remove-product/:id", jwtauth, (req, res, next) => {
     ProductController.delete(req, res, next)
 })
 
-//   route to update product
+
 prdocutRoutes.put("/update-product/:id", jwtauth, (req, res, next) => {
     ProductController.update(req, res, next)
 })
@@ -41,13 +41,24 @@ prdocutRoutes.post('/decline/:id', jwtauth, (req, res, next) => {
     ProductController.decline(req, res, next)
 })
 
+//to get all pending product 
+prdocutRoutes.get('/getall-pendingProduct', jwtauth, (req, res, next) => {
+    ProductController.getAllPendingProduct(req, res, next);
+})
+
 prdocutRoutes.get("/filter-product", (req, res, next) => {
     ProductController.filter(req, res, next)
 })
 
-prdocutRoutes.put('/update-stock/:id',jwtauth,(req,res,next) =>{
-    ProductController.updateStock(req,res,next)
+prdocutRoutes.put('/update-stock/:id', jwtauth, (req, res, next) => {
+    ProductController.updateStock(req, res, next)
 })
+
+
+prdocutRoutes.get('/pending-product/:id', jwtauth, (req, res, next) => {
+    ProductController.getsinglePending(req, res, next)
+})
+
 
 export default prdocutRoutes;
 

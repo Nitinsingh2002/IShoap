@@ -2,6 +2,7 @@
 
 
 export interface PendingProduct {
+    _id?:string,
     name: string,
     description: string,
     price: number | undefined,

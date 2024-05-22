@@ -63,10 +63,12 @@ export const UserList = () => {
                         {
                             allUser?.map((single) => (
                                 <div key={single._id} className="admin-all-vendor">
+                                    <div>
                                     <h6 className="pra">Name : <span>{single.name.firstName}{" "}{single.name.lastName}</span></h6>
                                     <p className="pra">Email : <span>{single.email}</span></p>
                                     <p className="pra">contact number :{single.mobile}</p>
                                     <p className="pra">Gender : {single.gender}</p>
+                                    </div>
                                 </div>
                             ))
                         }

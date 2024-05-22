@@ -64,9 +64,11 @@ export const VendorList = () => {
                         {
                             allVendor?.map((single) => (
                                 <div  key={single._id}   className="admin-all-vendor">
-                                   <h6 className="pra">Name : <span>{single.name}</span></h6>
+                                  <div>
+                                  <h6 className="pra">Name : <span>{single.name}</span></h6>
                                    <p className="pra">Email : <span>{single.email}</span></p>
                                    <p className="pra">contact number: {single.mobile}</p>
+                                  </div>
                                 </div>
                             ))
                         }

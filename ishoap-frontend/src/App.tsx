@@ -32,6 +32,8 @@ import { UserList } from "./component/Admin-operation/listodAlluser";
 import { CategoryList } from "./component/Admin-operation/listOfAllCategory";
 import { AddCategory } from "./component/Admin-operation/add-category";
 import { UpdateCategory } from "./component/Admin-operation/Admin-update-category";
+import { PendingProduct } from "./component/Admin-operation/PendingProduct";
+import { SinglePendingProduct } from "./component/Admin-operation/single-product";
 
 
 
@@ -64,7 +66,7 @@ function App() {
           </Route>
 
 
-          {/* admin routes start fro here */}
+          {/* admin routes start from here */}
           <Route path="/admin" element={<><AdminNavbar /><AdminDashboard /></>}>
             <Route path="add-product" element={<AdminAddProduct />} />
             <Route path="all-product" element={<AdminAllProductList />} />
@@ -73,12 +75,11 @@ function App() {
             <Route path="all-user" element={<UserList />} />
             <Route path="all-category" element={<CategoryList />} />
             <Route path="add-category" element={<AddCategory />} />
-            <Route path="update-category/:id" element={<UpdateCategory />}/>
+            <Route path="update-category/:id" element={<UpdateCategory />} />
+            <Route path="pending-product" element={<PendingProduct />} />
           </Route>
-
-
+          <Route path="admin/pending-product/:id" element={<><Navbar/><SinglePendingProduct /></>}/>
         </Routes>
-
       </BrowserRouter>
     </>
   );

@@ -70,40 +70,40 @@ export function AdminSidebar() {
                         </p>
 
 
-                        <p className={location.pathname === "/vendor/update-details" ? "active" : ""}>
-                            <NavLink to="/vendor/update-details"
+                        <p className={location.pathname === "/vendor/pending-product/" ? "active" : ""}>
+                            <NavLink to="/admin/pending-product"
                                 style={{ textDecoration: 'none', color: 'inherit' }}>
                                 Pending Product
                             </NavLink>
                         </p>
 
 
-                        <p className={location.pathname === "/vendor/update-details" ? "active" : ""}>
-                            <NavLink to="/vendor/update-details"
+                        <p className={location.pathname === "/admin/all-vendor" ? "active" : ""}>
+                            <NavLink to="/admin/all-vendor"
                                 style={{ textDecoration: 'none', color: 'inherit' }}>
                                 All Vendor
                             </NavLink>
                         </p>
 
 
-                        <p className={location.pathname === "/vendor/update-details" ? "active" : ""}>
-                            <NavLink to="/vendor/update-details"
+                        <p className={location.pathname === "/admin/all-user" ? "active" : ""}>
+                            <NavLink to="/admin/all-user"
                                 style={{ textDecoration: 'none', color: 'inherit' }}>
                                 All User
                             </NavLink>
                         </p>
 
 
-                        <p className={location.pathname === "/vendor/update-details" ? "active" : ""}>
-                            <NavLink to="/vendor/update-details"
+                        <p className={location.pathname === "/admin/all-category" ? "active" : ""}>
+                            <NavLink to="/admin/all-category"
                                 style={{ textDecoration: 'none', color: 'inherit' }}>
                                 All Category
                             </NavLink>
                         </p>
 
 
-                        <p className={location.pathname === "/vendor/update-details" ? "active" : ""}>
-                            <NavLink to="/vendor/update-details"
+                        <p className={location.pathname === "/admin/add-category" ? "active" : ""}>
+                            <NavLink to="/admin/add-category"
                                 style={{ textDecoration: 'none', color: 'inherit' }}>
                                 Add Category
                             </NavLink>
