@@ -41,7 +41,8 @@ export const VendorLogin = () => {
                 });
             } else {
                 setCookie('token', result.response, {
-                    expires: expirationTime
+                    expires: expirationTime,
+                    path:'/vendor'
                 });
                 resetForm();
                 navigate('/vendor');

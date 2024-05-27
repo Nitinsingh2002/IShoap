@@ -19,7 +19,7 @@ export function VendorNavbar() {
     }
 
     const handleLogout = (): void => {
-        removeCookie('token');
+        removeCookie('token',{path:'/vendor'});
         navigate('/vendor/login');
     }
     console.log(decodedToken)

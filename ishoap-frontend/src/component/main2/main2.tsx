@@ -3,6 +3,7 @@ import axios from 'axios';
 import './main2.css'
 import { useState, useEffect } from 'react'
 import { IProduct } from '../../contract/productContract';
+import { Link } from 'react-router-dom';
 
 export function Main2() {
     const [product, setProduct] = useState<IProduct[]>([{
@@ -42,16 +43,18 @@ export function Main2() {
 
             <div className='animation'>
                 {
-                    product.slice(0,3).map((item, index) => (
+                    product.slice(0, 3).map((item, index) => (
                         <div className='product-container' key={index}>
-                            <div className='product-image'>
-                                <img src={`http://localhost:8000/images/${item.image[3]}`} alt={item.name} />
-                            </div>
+                            <Link to={`/product/${item._id}`}  style={{textDecoration:'none' , color:'inherit'}}>
+                                <div className='product-image'>
+                                    <img src={`http://localhost:8000/images/${item.image[3]}`} alt={item.name} />
+                                </div>
 
-                            <div className='product-details'>
-                                <span>{item.name}</span>
-                                <span className='price'>{item.price}</span>
-                            </div>
+                                <div className='product-details'>
+                                    <span>{item.name}</span>
+                                    <span className='price'>{item.price}</span>
+                                </div>
+                            </Link>
                         </div>
                     ))
                 }

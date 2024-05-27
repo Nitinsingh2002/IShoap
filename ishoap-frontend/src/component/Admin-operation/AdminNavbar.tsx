@@ -6,13 +6,14 @@ import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import { AdminDetails } from '../../contract/AdminDetailcontract';
 import { jwtDecode } from 'jwt-decode';
+import path from 'path';
 
 
 
 export function AdminNavbar() {
 
     let navigate = useNavigate();
-    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+    const [cookies, setCookie, removeCookie] = useCookies(['token','role']);
     const token = cookies['token']
     const [decodedToken, setDecodedToken] = useState<AdminDetails>()
 
@@ -22,11 +23,15 @@ export function AdminNavbar() {
     }
 
     const handleLogout = (): void => {
-        removeCookie('token');
-        navigate('/admin-login');
+        removeCookie('token', { path: '/' });
+        removeCookie('role', { path: '/' });
+        navigate('/admin/login');
     }
 
 
+      const handleOffMenu =()=>{
+        setMenu(false);
+      }
 
     useEffect(() => {
 
@@ -48,15 +53,11 @@ export function AdminNavbar() {
 
                 <div className={menu ? 'navbar-details showMenu' : 'navbar-details'}>
                     <Link to="/admin" className='user-info-nav'>
-                        <div className='detail' ><i className="bi bi-house-door-fill"></i>Home</div>
+                        <div className='detail' onClick={handleOffMenu} ><i className="bi bi-house-door-fill"></i>Home</div>
                     </Link>
-                    <Link to="/admin" className='user-info-nav'>
-                        <div className='detail ' ><i className="bi bi-person-circle"></i>
-                            {decodedToken ? decodedToken.name : "User"}
-                        </div>
-                    </Link>
-                    <Link to="/admin" className='user-info-nav'>
-                        <div className='detail'><i className="bi bi-speaker-fill"></i> Add Product</div>
+                   
+                    <Link to="/admin/add-product" className='user-info-nav'>
+                        <div className='detail' onClick={handleOffMenu}><i className="bi bi-speaker-fill"></i> Add Product</div>
                     </Link>
                     <div className='detail' onClick={handleLogout}><i className="bi bi-box-arrow-in-right"></i>Logout</div>
                 </div>

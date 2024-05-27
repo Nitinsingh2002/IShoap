@@ -53,19 +53,17 @@ export function AdminSidebar() {
                             </span>Admin Operation
                         </h5>
 
+                        <p className={location.pathname === "/admin/all-product" || location.pathname === "/admin" ? "active" : ""}>
+                            <NavLink to="/admin/all-product"
+                                style={{ textDecoration: 'none', color: 'inherit' }}>
+                                All Product
+                            </NavLink>
+                        </p>
 
                         <p className={location.pathname === "/admin/add-product" ? "active" : ""}>
                             <NavLink to="/admin/add-product"
                                 style={{ width: '100%', textDecoration: 'none', color: 'inherit' }}>
                                 Add Product
-                            </NavLink>
-                        </p>
-
-
-                        <p className={location.pathname === "/admin/all-product" ? "active" : ""}>
-                            <NavLink to="/admin/all-product"
-                                style={{ textDecoration: 'none', color: 'inherit' }}>
-                                All Product
                             </NavLink>
                         </p>
 

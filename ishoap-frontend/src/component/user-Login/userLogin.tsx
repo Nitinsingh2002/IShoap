@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 export function Userlogin() {
     let navigate = useNavigate();
 
-    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+    const [cookies, setCookie, removeCookie] = useCookies(['token','role']);
     const [islogin, setIsLogin] = useState<boolean>(false)
 
 
@@ -38,6 +38,7 @@ export function Userlogin() {
                 const { email, password } = formData;
                 const response = await axios.post('http://localhost:8000/user/user-login', { email, password })
                 setCookie('token', response.data, { expires: expirationTime })
+                setCookie('role', 'user', { expires: expirationTime});
                 navigate("/");
                 toast.success("Login sucessfull !")
             } catch (error) {

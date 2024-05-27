@@ -5,6 +5,8 @@ import { ProductDetails } from '../../contract/productDetails.contract';
 import { useNavigate } from "react-router-dom";
 import { AdminProductCard } from "./admin-product-card";
 import { toast } from "react-toastify";
+import Loadingcomponent from "../Loading/Loading";
+import { dividerClasses } from "@mui/material";
 
 
 export function AdminAllProductList() {
@@ -12,16 +14,16 @@ export function AdminAllProductList() {
     const token = cookies['token']
     const fetchDataFromApi = useFetchApi();
     const [allProduct, setAllProduct] = useState<ProductDetails[]>()
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>()
     const [disabled, setDisabled] = useState<boolean>(false);
-   
+
 
 
     const navigate = useNavigate();
 
     const loadAllproduct = async (): Promise<void> => {
-        console.log("koad all product function called")
+        setLoading(true);
         setLoading(true);
         const result = await fetchDataFromApi({
             url: "http://localhost:8000/product/get-allproducts",
@@ -40,7 +42,7 @@ export function AdminAllProductList() {
 
     const deleteProduct = async (id: string): Promise<void> => {
         console.log("delete function called")
-        setLoading(true);
+        // setLoading(true);
         setDisabled(true);
         const result = await fetchDataFromApi({
             url: `http://localhost:8000/product/remove-product/${id}`,
@@ -48,8 +50,8 @@ export function AdminAllProductList() {
             token: token
         })
         if (result.error) {
-            toast.error(result.error,{
-                autoClose:100
+            toast.error(result.error, {
+                autoClose: 100
             })
             setError(result.error)
         } else {
@@ -58,13 +60,13 @@ export function AdminAllProductList() {
             });
         }
         loadAllproduct();
-        setLoading(false);
+        // setLoading(false);
         setDisabled(false);
     }
 
     const updateProduct = async (id: string): Promise<void> => {
         console.log("update function called")
-        setLoading(true)
+        // setLoading(true)
         setDisabled(true);
         const result = await fetchDataFromApi({
             url: `http://localhost:8000/product/update-product/${id}`,
@@ -79,7 +81,7 @@ export function AdminAllProductList() {
             });
         }
         loadAllproduct();
-        setLoading(false)
+        // setLoading(false)
         setDisabled(false);
     }
 
@@ -89,21 +91,25 @@ export function AdminAllProductList() {
             navigate('/admin/login')
         } else {
             loadAllproduct();
-        
+
         }
     }, [])
 
     return (
         <>
-            {allProduct &&
-                <AdminProductCard
-                    productList={allProduct}
-                    deleteProduct={deleteProduct}
-                    updateProduct={updateProduct}
-                    disabled={disabled}
-                />
+            {
+                loading ? (
+                    <div className="text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+                        <Loadingcomponent />
+                    </div>
+                ) : (allProduct &&
+                    <AdminProductCard
+                        productList={allProduct}
+                        deleteProduct={deleteProduct}
+                        updateProduct={updateProduct}
+                        disabled={disabled}
+                    />)
             }
-
         </>
     )
 }

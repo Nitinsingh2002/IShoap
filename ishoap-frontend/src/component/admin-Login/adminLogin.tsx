@@ -37,8 +37,8 @@ export function AdminLogin() {
                 expirationTime.setTime(expirationTime.getTime() + (4 * 60 * 60 * 1000));
                 const { email, password } = formData;
                 const response = await axios.post('http://localhost:8000/admin/login', { email, password })
-                setCookie('token', response.data, { expires: expirationTime, path: '/' });
-                setCookie('role', 'admin', { expires: expirationTime, path: '/' });
+                setCookie('token', response.data, { expires: expirationTime, path: '/admin' });
+                setCookie('role', 'admin', { expires: expirationTime, path: '/admin' });
 
                 navigate("/admin");
             } catch (error) {

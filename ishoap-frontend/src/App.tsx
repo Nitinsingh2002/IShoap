@@ -68,8 +68,9 @@ function App() {
 
           {/* admin routes start from here */}
           <Route path="/admin" element={<><AdminNavbar /><AdminDashboard /></>}>
-            <Route path="add-product" element={<AdminAddProduct />} />
+          <Route index element={<AdminAllProductList />} />
             <Route path="all-product" element={<AdminAllProductList />} />
+            <Route path="add-product" element={<AdminAddProduct />} />
             <Route path="update-product/:id" element={<AdminUpdateProduct />} />
             <Route path="all-vendor" element={<VendorList />} />
             <Route path="all-user" element={<UserList />} />
@@ -78,7 +79,7 @@ function App() {
             <Route path="update-category/:id" element={<UpdateCategory />} />
             <Route path="pending-product" element={<PendingProduct />} />
           </Route>
-          <Route path="admin/pending-product/:id" element={<><Navbar/><SinglePendingProduct /></>}/>
+          <Route path="admin/pending-product/:id" element={<><Navbar /><SinglePendingProduct /></>} />
         </Routes>
       </BrowserRouter>
     </>
