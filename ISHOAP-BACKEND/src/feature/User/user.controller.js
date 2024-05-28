@@ -1,6 +1,8 @@
 import userRepository from "./user.repository.js";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
+import { sendWelcomeEmail } from "../../config/nodemailer.js";
+
 
 export default class userController {
     constructor() {
@@ -15,6 +17,17 @@ export default class userController {
             const DateOfBirth = new Date(req.body.DateOfBirth)
             const hashedPassword = await bcrypt.hash(password, 10);
             await this.userRepository.RegisterCustomer(firstName, lastName, email, hashedPassword, mobile, gender, DateOfBirth);
+
+            let text;
+            if (gender == 'male') {
+                text = `Hello Mr. ${firstName},\n\nWelcome to Ishoap! We are glad to have you with us.\n\nBest Regards,\nE-commerce Team`;
+            } else {
+                text = `Hello Mrs. ${firstName},\n\nWelcome to Ishoap! We are glad to have you with us.\n\nBest Regards,\nE-commerce Team`;
+            }
+            const admin_email = process.env.admin_email;
+            const subject = 'Welcome to Ishoap';
+            sendWelcomeEmail(admin_email, email, subject, text);
+
             return res.send("user registered sucessfully");
         } catch (error) {
             next(error)
@@ -108,8 +121,8 @@ export default class userController {
         try {
             const userId = req.userId;
             const id = req.params.id;
-            const { street, city, state, country, postalCode, mobile,name } = req.body
-            await this.userRepository.updateCustomerAddress(userId, id, street, city, state, country, postalCode, mobile,name);
+            const { street, city, state, country, postalCode, mobile, name } = req.body
+            await this.userRepository.updateCustomerAddress(userId, id, street, city, state, country, postalCode, mobile, name);
             return res.status(200).send("address updated sucessfully")
         } catch (error) {
             next(error)
