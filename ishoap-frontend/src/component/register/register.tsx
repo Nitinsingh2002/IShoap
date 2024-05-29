@@ -11,13 +11,13 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 export function Register() {
 
     const [isSubmitting, setisSubmitting] = useState<boolean>(false);
-
+    const navigate  = useNavigate();
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required('First name is required').min(2, 'Too short for a first name!').max(50, 'Too long for a first name!'),
         lastName: Yup.string().required('Last name is required').min(2, 'Last name is too short').max(50, 'Last name is too long'),
@@ -51,18 +51,20 @@ export function Register() {
         },
         validationSchema: validationSchema,
 
-        onSubmit: async (formData) => {
+        onSubmit: async (formData,{resetForm}) => {
             setisSubmitting(true);
             try {
                 const { firstName, lastName, email, mobile, gender, password, DateOfBirth } = formData;
                 const response = await axios.post('http://localhost:8000/user/user-register',
                     { firstName, lastName, email, mobile, gender, password, DateOfBirth })
-                toast.success("User registered successfully!");
+                toast.success("User registered successfully!",{autoClose:800});
+                resetForm();
+                navigate("/login");
             } catch (error: unknown) {
                 if (axios.isAxiosError(error) && error.response) {
-                    toast.error(error.response.data);
+                    toast.error(error.response.data,{autoClose:1000});
                 } else {
-                    toast.error("An unexpected error occurred.");
+                    toast.error("An unexpected error occurred.",{autoClose:1000});
                 }
             } finally {
                 setisSubmitting(false)
