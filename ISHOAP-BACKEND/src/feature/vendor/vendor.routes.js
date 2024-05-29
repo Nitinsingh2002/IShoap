@@ -5,6 +5,7 @@ import imageValidationMiddleware from '../../middleware/imageVlidation.middlewar
 import { uploadFile } from '../../middleware/muter.js';
 
 
+
 const VendorController = new vendorController();
 
 const vendorRoutes = express.Router();

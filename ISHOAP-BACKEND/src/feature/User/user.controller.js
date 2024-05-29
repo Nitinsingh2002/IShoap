@@ -20,13 +20,14 @@ export default class userController {
 
             let text;
             if (gender == 'male') {
-                text = `Hello Mr. ${firstName},\n\nWelcome to Ishoap! We are glad to have you with us.\n\nBest Regards,\nE-commerce Team`;
+                text = `Hello Mr. ${firstName},\n\nWelcome to Ishoap! We are glad to have you with us.\n\nBest Regards,\nIshoap Team`;
             } else {
-                text = `Hello Mrs. ${firstName},\n\nWelcome to Ishoap! We are glad to have you with us.\n\nBest Regards,\nE-commerce Team`;
+                text = `Hello Mrs. ${firstName},\n\nWelcome to Ishoap! We are glad to have you with us.\n\nBest Regards,\nIshoap Team`;
             }
-            const admin_email = process.env.admin_email;
+
+            const COMPANY_GMAIL = process.env.COMPANY_GMAIL;
             const subject = 'Welcome to Ishoap';
-            sendWelcomeEmail(admin_email, email, subject, text);
+            sendWelcomeEmail(COMPANY_GMAIL, email, subject, text);
 
             return res.send("user registered sucessfully");
         } catch (error) {

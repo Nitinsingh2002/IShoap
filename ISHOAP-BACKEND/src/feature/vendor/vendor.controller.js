@@ -1,6 +1,8 @@
 import vendorRepository from "./vendor.repository.js";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
+import { sendWelcomeEmail } from "../../config/nodemailer.js";
+
 export default class vendorController {
     constructor() {
         this.vendorRepository = new vendorRepository();
@@ -78,7 +80,18 @@ export default class vendorController {
             const image = req.files.map(file => file.filename)
             console.log("image", image)
             await this.vendorRepository.productadd(vendorId, name, price, description, stock, categoryId, image);
+
+
+            const from = process.env.COMPANY_GMAIL;
+            const adminEmail = process.env.ADMIN_GMAIL_ID;
+            const subject = "New Product Added by Vendor for Verification";
+            const adminName = process.env.ADMIN_NAME
+            const text = `Hello ${adminName},\n\nPlease check the pending product section. A new product has been added by a vendor and is awaiting your verification.\n\nBest Regards,\nIshoap Team`;
+            sendWelcomeEmail(from, adminEmail, subject, text)
+
             return res.status(201).send('The product is awaiting approval from the administrator.')
+
+
         } catch (error) {
             next(error)
         }
@@ -100,7 +113,7 @@ export default class vendorController {
     async getProduct(req, res, next) {
         try {
             const vendorid = req.userId;
-          
+
             const result = await this.vendorRepository.getAllproductsofVendor(vendorid);
             return res.status(201).send(result)
         } catch (error) {
