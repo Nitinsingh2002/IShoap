@@ -32,13 +32,11 @@ export const userSchema = new Schema({
     }],
     mobile: {
         type: String,
-        required: true,
         match: [/^\d{10}$/, 'Mobile number must be 10 digits long']
 
     },
     gender: {
         type: String,
-        required: true,
         enum: ['male', 'female']
     },
     dateOfBirth: {

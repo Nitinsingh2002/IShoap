@@ -1,7 +1,7 @@
 import express from 'express'
 import userController from './user.controller.js'
 import jwtauth from '../../middleware/jwt.middleware.js';
-
+import passport from 'passport';
 
 const UserController = new userController();
 const userRoutes = express.Router();
@@ -43,5 +43,18 @@ userRoutes.get("/fetchUserDetails", jwtauth, (req, res, next) => {
     UserController.getSingleUser(req, res, next)
 })
 
+
+
+
+// google  authentication routes 
+userRoutes.get("/auth/google", passport.authenticate('google', { scope: ['profile'] }));
+
+//calback url 
+userRoutes.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/user-login' }),
+    function (req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/user-login');
+    });
 
 export default userRoutes;

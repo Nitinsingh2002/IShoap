@@ -20,9 +20,9 @@ export default class userController {
 
             let text;
             if (gender == 'male') {
-                text = `Hello Mr. ${firstName},\n\nWelcome to Ishoap! We are glad to have you with us.\n\nBest Regards,\nIshoap Team`;
+                text = `Hello Mr.${firstName},\n\nWelcome to iShoap! We are delighted to have you join our community.\n\nBest Regards,\niShoap Team`;
             } else {
-                text = `Hello Mrs. ${firstName},\n\nWelcome to Ishoap! We are glad to have you with us.\n\nBest Regards,\nIshoap Team`;
+                text = `Hello Mrs. ${firstName},\n\nWelcome to iShoap! We are delighted to have you join our community.\n\nBest Regards,\niShoap Team`;
             }
 
             const COMPANY_GMAIL = process.env.COMPANY_GMAIL;

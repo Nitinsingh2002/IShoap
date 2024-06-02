@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 export const sendWelcomeEmail = (from, to, subject, text) => {
     const mailOptions = {
-        from: from,
+        from: `IShoap <${from}>`,
         to: to,
         subject: subject,
         text: text
