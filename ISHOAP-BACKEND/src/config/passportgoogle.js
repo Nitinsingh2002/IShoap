@@ -4,6 +4,9 @@ import jwt from 'jsonwebtoken';
 import userModel from '../feature/User/user.schema';
 
 
+export default function google (){
+  console.log("hello")
+}
 const jwtcode = process.env.JWT_SECRET_KEY_CODE;
 
 passport.use(new GoogleStrategy({

@@ -2,6 +2,7 @@ import express from 'express'
 import userController from './user.controller.js'
 import jwtauth from '../../middleware/jwt.middleware.js';
 import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
 const UserController = new userController();
 const userRoutes = express.Router();

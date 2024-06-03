@@ -15,7 +15,6 @@ import { CartPage } from "./component/CartPage/cartPage";
 import { VendorRegistration } from "./component/vendorRegistrationLogin/vendorRegistraion";
 import { VendorLogin } from "./component/vendorRegistrationLogin/vendorLogin";
 import { VendorAddProduct } from "./component/vendorDashBoard/vendoAddProduct";
-import { FormDemo } from "./component/formDemo";
 import { VendorNavbar } from "./component/vendorDashBoard/vendor.navbar";
 import { VendorOpertion } from "./component/vendorOperation/vendorOperation";
 import { VendorDetails } from "./component/vendorOperation/vendorDetails";
@@ -34,6 +33,7 @@ import { AddCategory } from "./component/Admin-operation/add-category";
 import { UpdateCategory } from "./component/Admin-operation/Admin-update-category";
 import { PendingProduct } from "./component/Admin-operation/PendingProduct";
 import { SinglePendingProduct } from "./component/Admin-operation/single-product";
+import { GoogleAuth } from "./component/google";
 
 
 
@@ -80,6 +80,9 @@ function App() {
             <Route path="pending-product" element={<PendingProduct />} />
           </Route>
           <Route path="admin/pending-product/:id" element={<><Navbar /><SinglePendingProduct /></>} />
+
+
+          <Route path="/auth"  element={<GoogleAuth/>}/>
         </Routes>
       </BrowserRouter>
     </>

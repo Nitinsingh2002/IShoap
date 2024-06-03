@@ -13,12 +13,17 @@ import prdocutRoutes from './src/feature/products/product.route.js';
 import ratingRoutes from './src/feature/productRating/rating.routes.js'
 import cartRoutes from './src/feature/cart/cart.route.js';
 import orderRoutes from './src/feature/order/order.routes.js';
+import passport from 'passport';
+
+
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(passport.initialize());
 
 
 app.use("/user", userRoutes);
