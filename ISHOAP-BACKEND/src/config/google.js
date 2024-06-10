@@ -1,18 +1,16 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import jwt from 'jsonwebtoken';
-import userModel from '../feature/User/user.schema';
+import userModel from '../feature/User/user.schema.js';
 
 
-export default function google (){
-  console.log("hello")
-}
+
 const jwtcode = process.env.JWT_SECRET_KEY_CODE;
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:8000/users/auth/google/callback"
+    callbackURL: "http://localhost:8000/user/auth/google/callback",
   },
     async function (accessToken, refreshToken, profile, cb) {
       try {

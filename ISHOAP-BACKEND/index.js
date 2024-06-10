@@ -15,11 +15,23 @@ import cartRoutes from './src/feature/cart/cart.route.js';
 import orderRoutes from './src/feature/order/order.routes.js';
 import passport from 'passport';
 
+import './src/config/google.js'
+
+
+
 
 
 
 const app = express();
-app.use(cors());
+// app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: 'GET,POST,OPTIONS',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+  };
+  
+  app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
