@@ -37,7 +37,6 @@ export const userSchema = new Schema({
     },
     gender: {
         type: String,
-        enum: ['male', 'female']
     },
     dateOfBirth: {
         type: Date,

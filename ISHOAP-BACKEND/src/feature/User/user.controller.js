@@ -40,6 +40,8 @@ export default class userController {
         try {
             const { email, password } = req.body;
             const user = await this.userRepository.customerLogin(email);
+            console.log(" user is, ", email);
+            console.log("user password is ",password);
 
             const match = await bcrypt.compare(password, user.password)
             if (match) {

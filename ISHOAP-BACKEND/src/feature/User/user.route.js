@@ -49,19 +49,32 @@ userRoutes.get("/fetchUserDetails", jwtauth, (req, res, next) => {
 
 
 // google  authentication routes 
-userRoutes.get("/auth/google", passport.authenticate('google', { scope: ['profile','email'] }));
+userRoutes.get("/auth/google", passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 
 
 //calback url 
 userRoutes.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/user-login' }),
+    passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:3000/login' }),
     function (req, res) {
-        // Successful authentication, redirect home.
-        res.redirect('/user-login');
-});
+        //setting cookie expiry time;
+        const expirtTime = new Date();
+        expirtTime.setHours(expirtTime.getHours() + 4)
+        const tokenValue = req.user.token;
+        res.cookie('token', tokenValue, {
+            httpOnly: false,
+            secure: false,
+            sameSite: 'strict',
+            expires: expirtTime
+        }).cookie('role', 'user', {
+            httpOnly: false,
+            secure: false,
+            sameSite: 'strict',
+            expires: expirtTime
+        }).redirect('http://localhost:3000/');
+    });
 
 
 
-    
+
 export default userRoutes;

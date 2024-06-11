@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { UserLogin } from '../../contract/loginContract';
 import * as Yup from 'yup';
-import { Button, hexToRgb } from "@mui/material";
+import { Button, Divider, hexToRgb } from "@mui/material";
 import './login.css';
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -9,13 +9,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Google } from '@mui/icons-material';
+
 
 
 
 export function Userlogin() {
     let navigate = useNavigate();
 
-    const [cookies, setCookie, removeCookie] = useCookies(['token','role']);
+    const [cookies, setCookie, removeCookie] = useCookies(['token', 'role']);
     const [islogin, setIsLogin] = useState<boolean>(false)
 
 
@@ -38,7 +40,7 @@ export function Userlogin() {
                 const { email, password } = formData;
                 const response = await axios.post('http://localhost:8000/user/user-login', { email, password })
                 setCookie('token', response.data, { expires: expirationTime })
-                setCookie('role', 'user', { expires: expirationTime});
+                setCookie('role', 'user', { expires: expirationTime });
                 navigate("/");
                 toast.success("Login sucessfull !")
             } catch (error) {
@@ -52,6 +54,11 @@ export function Userlogin() {
             }
         }
     });
+
+
+    const handleGoogleLogin = () => {
+        window.location.href = 'http://localhost:8000/user/auth/google';
+    };
 
     return (
 
@@ -88,9 +95,29 @@ export function Userlogin() {
                     <Button variant="contained" type='submit' className='form-control' disabled={islogin}>Login</Button>
                 </div>
 
+
+                <Divider className="mb-2">OR</Divider>
+
+                <div className="form-group mb-2">
+                    <Button
+                        onClick={handleGoogleLogin}
+                        variant="contained"
+                        style={{ backgroundColor: '#FBBC05', color: 'white' }}
+                        className="form-control google-button google-button"
+                        startIcon={<Google />}
+                    >
+                        Login with Google
+                    </Button>
+                </div>
+
+
+
                 <div className="form-group mb-2">
                     <button className="btn btn-link form-control text-center"><Link to="/register">Don't have an account? Register</Link></button>
                 </div>
+
+
+
             </form>
         </>
     );

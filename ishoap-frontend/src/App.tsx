@@ -33,7 +33,8 @@ import { AddCategory } from "./component/Admin-operation/add-category";
 import { UpdateCategory } from "./component/Admin-operation/Admin-update-category";
 import { PendingProduct } from "./component/Admin-operation/PendingProduct";
 import { SinglePendingProduct } from "./component/Admin-operation/single-product";
-import { GoogleAuth } from "./component/google";
+import { Test } from "./component/test";
+
 
 
 
@@ -68,7 +69,7 @@ function App() {
 
           {/* admin routes start from here */}
           <Route path="/admin" element={<><AdminNavbar /><AdminDashboard /></>}>
-          <Route index element={<AdminAllProductList />} />
+            <Route index element={<AdminAllProductList />} />
             <Route path="all-product" element={<AdminAllProductList />} />
             <Route path="add-product" element={<AdminAddProduct />} />
             <Route path="update-product/:id" element={<AdminUpdateProduct />} />
@@ -82,7 +83,10 @@ function App() {
           <Route path="admin/pending-product/:id" element={<><Navbar /><SinglePendingProduct /></>} />
 
 
-          <Route path="/auth"  element={<GoogleAuth/>}/>
+
+
+          <Route path="/test" element={<Test />} />
+
         </Routes>
       </BrowserRouter>
     </>

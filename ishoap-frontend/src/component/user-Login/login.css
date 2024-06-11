@@ -10,23 +10,36 @@
     background-color: rgb(242, 246, 246);
     margin-top: 5rem;
 }
-.login-form input{
+
+.login-form input {
     background-color: rgb(242, 246, 246);
 }
 
-.login-form label{
+.login-form label {
     font-weight: 500;
 }
 
+.google-button {
+    background-color: #DB4437; 
+    color: white;
+    text-transform: none; 
+    font-weight: 500; 
+}
+
+.google-button:hover {
+    background-color: #d41806;
+}
+
+
 @media screen and (max-width: 991px) {
-    .login-form  {
+    .login-form {
         width: 40%;
     }
 }
 
 
 @media screen and (max-width: 767px) {
-    .login-form  {
+    .login-form {
         width: 100%;
         border-radius: none;
         height: 100vh;
