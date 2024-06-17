@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Google } from '@mui/icons-material';
+import { GitHub, Google } from '@mui/icons-material';
 
 
 
@@ -60,6 +60,10 @@ export function Userlogin() {
         window.location.href = 'http://localhost:8000/user/auth/google';
     };
 
+    const handleGithubLogin = ()=>{
+        window.location.href ='http://localhost:8000/user/auth/github';
+    }
+
     return (
 
         <>
@@ -98,17 +102,29 @@ export function Userlogin() {
 
                 <Divider className="mb-2">OR</Divider>
 
-                <div className="form-group mb-2">
+                <div className="form-group mb-2 d-flex"  style={{gap:'1rem'}}>
                     <Button
                         onClick={handleGoogleLogin}
                         variant="contained"
                         style={{ backgroundColor: '#FBBC05', color: 'white' }}
-                        className="form-control google-button google-button"
+                        className=" google-button google-button"
                         startIcon={<Google />}
                     >
                         Login with Google
                     </Button>
+
+                    <Button
+                        onClick={handleGithubLogin}
+                        variant="contained"
+                        style={{ backgroundColor: '#FBBC05', color: 'white' }}
+                        className=" google-button google-button"
+                        startIcon={<GitHub />}
+                    >
+                        Login with Github
+                    </Button>
                 </div>
+
+
 
 
 

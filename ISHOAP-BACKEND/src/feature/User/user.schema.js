@@ -12,8 +12,8 @@ export const userSchema = new Schema({
         },
         lastName: {
             type: String,
-            required: true,
-            minlength: [3, "Last name cannot be less than 3 characters"],
+           
+          
             maxlength: [30, "Last name cannot be more than 30 characters"]
         }
     },

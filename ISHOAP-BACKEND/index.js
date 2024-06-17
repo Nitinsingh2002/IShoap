@@ -16,6 +16,7 @@ import orderRoutes from './src/feature/order/order.routes.js';
 import passport from 'passport';
 
 import './src/config/google.js'
+import './src/config/github.js'
 
 
 
