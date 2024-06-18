@@ -25,17 +25,7 @@ import './src/config/github.js'
 
 const app = express();
 
-const corsOptions = {
-    origin: 'http://localhost:3000', // Restrict to this origin
-    methods: 'GET,POST', // Allow only GET and POST methods
-    credentials: true,
-    allowedHeaders: 'Content-Type,Authorization', // Allow specific headers
-    optionsSuccessStatus: 200 // Some legacy browsers choke on 204
-  };
-  
-  app.use(cors(corsOptions));
-  
-//   app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

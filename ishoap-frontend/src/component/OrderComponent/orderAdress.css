@@ -1,0 +1,16 @@
+.parentat {
+    width: 100vw;
+    height: 90vh;
+    background-color: rgb(233, 231, 231)
+}
+
+.at {
+    width: 60%;
+    margin: auto;
+    padding-top: 1rem;
+    background-color: white;
+    height: 90vh;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+}

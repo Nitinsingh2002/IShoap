@@ -14,7 +14,7 @@ export function Navbar() {
     const token = cookies['token']
     
 
-    console.log("token after google login is ", token)
+
     const [decodedToken, setDecodedToken] = useState<DecodedToken>()
 
 
@@ -34,7 +34,6 @@ export function Navbar() {
     }
 
     useEffect(() => {
-    console.log("token is use effect", token);
         if (!token) {
             navigate("/login")
         } else {
@@ -45,7 +44,7 @@ export function Navbar() {
     }, [token])
 
     
-console.log(menu)
+
 
     return (
         <>

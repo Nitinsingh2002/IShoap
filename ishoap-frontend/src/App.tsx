@@ -34,6 +34,8 @@ import { UpdateCategory } from "./component/Admin-operation/Admin-update-categor
 import { PendingProduct } from "./component/Admin-operation/PendingProduct";
 import { SinglePendingProduct } from "./component/Admin-operation/single-product";
 import { Test } from "./component/test";
+import { ListOfAddress } from "./component/OrderComponent/ListOfAddress";
+import { AdForm } from "./component/OrderComponent/adressForm";
 
 
 
@@ -55,6 +57,8 @@ function App() {
           <Route path="/cart" element={<><Navbar /><CartPage /></>} />
           <Route path="/vendor/registration" element={<><VendorRegistration /></>} ></Route>
           <Route path="/vendor/login" element={<VendorLogin />} />
+          <Route path="/order/address" element={<><Navbar/><ListOfAddress /></>} />
+          <Route path= "/order/add-address" element ={<><Navbar/> <AdForm/></>}/>
 
 
           <Route path="/vendor" element={<VendorNavbar />}>
@@ -83,9 +87,6 @@ function App() {
           <Route path="admin/pending-product/:id" element={<><Navbar /><SinglePendingProduct /></>} />
 
 
-
-
-          <Route path="/test" element={<Test />} />
 
         </Routes>
       </BrowserRouter>

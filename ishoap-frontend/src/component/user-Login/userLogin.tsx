@@ -60,8 +60,8 @@ export function Userlogin() {
         window.location.href = 'http://localhost:8000/user/auth/google';
     };
 
-    const handleGithubLogin = ()=>{
-        window.location.href ='http://localhost:8000/user/auth/github';
+    const handleGithubLogin = () => {
+        window.location.href = 'http://localhost:8000/user/auth/github';
     }
 
     return (
@@ -102,33 +102,51 @@ export function Userlogin() {
 
                 <Divider className="mb-2">OR</Divider>
 
-                <div className="form-group mb-2 d-flex"  style={{gap:'1rem'}}>
+                {/* <div className="form-group mb-2 d-flex"  style={{gap:'1rem'}}> */}
+                <div>
                     <Button
                         onClick={handleGoogleLogin}
-                        variant="contained"
-                        style={{ backgroundColor: '#FBBC05', color: 'white' }}
+                        variant="outlined"
+                        sx={{
+                            width: "100%",
+                            borderColor: "black",
+                            borderRadius:'10px'
+                          }}
+                        style={{
+                            width: "100%",
+                            color:"black"
+                        }}
                         className=" google-button google-button"
                         startIcon={<Google />}
+
                     >
                         Login with Google
                     </Button>
 
                     <Button
                         onClick={handleGithubLogin}
-                        variant="contained"
-                        style={{ backgroundColor: '#FBBC05', color: 'white' }}
-                        className=" google-button google-button"
-                        startIcon={<GitHub />}
+                        variant="outlined"
+                        sx={{
+                            width: "100%",
+                            borderColor: "black",
+                            borderRadius:'10px'
+                          }}
+                        style={{
+                            width: "100%",
+                            color:"black"
+                        }}
+                        className=" google-button google-button mt-2"
+                        startIcon={<GitHub sx={{ color: "black" }} />}
+                       
                     >
                         Login with Github
                     </Button>
                 </div>
 
 
+          <hr  />
 
-
-
-                <div className="form-group mb-2">
+                <div className="form-group mb-2 mt-0">
                     <button className="btn btn-link form-control text-center"><Link to="/register">Don't have an account? Register</Link></button>
                 </div>
 

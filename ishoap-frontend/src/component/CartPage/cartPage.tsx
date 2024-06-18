@@ -6,6 +6,8 @@ import { CartDetails } from '../../contract/cartContract';
 import './cartpage.css'
 import { Button } from "@mui/material";
 import { ReusableModal } from "../Resuable-modal/ReuasbleModal";
+import { Link } from "react-router-dom";
+
 
 export const CartPage = () => {
     const fetchDataFromApi = useFetchApi();
@@ -20,7 +22,6 @@ export const CartPage = () => {
 
 
     const loadCartData = async () => {
-        console.log("api called");
         const result = await fetchDataFromApi({
             url: "http://localhost:8000/cart/get",
             token: token,
@@ -39,15 +40,12 @@ export const CartPage = () => {
     };
 
     const calculateFinalPrice = () => {
-        let sum = 0;
-        for (const product of cartData) {
-            sum = sum + product.totalPrice
-        }
+        const sum = cartData.reduce((accumulator, product) => accumulator + product.totalPrice, 0);
+        console.log("sum is ", sum);
         setFinalPrice(sum);
     }
 
     const cartUpdate = async (id: string) => {
-
         const result = await fetchDataFromApi({
             url: `http://localhost:8000/cart/update/${id}`,
             method: 'PUT',
@@ -58,8 +56,12 @@ export const CartPage = () => {
         if (result.error) {
             toast.error(result.error);
         } else {
-            toast.success("Cart updated sucessfully");
+            toast.success("Cart updated sucessfully", {
+                autoClose: 800
+            });
+            await loadCartData();
             setCartUpdated(true);
+            calculateFinalPrice();
         }
     }
 
@@ -121,14 +123,15 @@ export const CartPage = () => {
 
 
 
+    console.log(cartData)
+
     useEffect(() => {
         loadCartData();
     }, [finalPrice, cartUpdated]);
 
-    console.log('cartData', cartData)
 
 
-        return (
+    return (
         <div className="table-container">
             <ToastContainer />
 
@@ -194,7 +197,9 @@ export const CartPage = () => {
                         <tr >
                             <td className="table-fotter-  text-end fw-bold" colSpan={5}>Total ammount: {finalPrice?.toLocaleString('en-In', { style: 'currency', currency: 'INR' })}</td>
                             <td className="text-end table-fotter-">
-                                <Button className="btn btn-primary buybtn " variant="contained">Buy now</Button>
+                                <Link to="/order/address">
+                                    <Button className="btn btn-primary buybtn " variant="contained">Buy now</Button>
+                                </Link>
                             </td>
                         </tr>
                     </tfoot>
@@ -204,5 +209,5 @@ export const CartPage = () => {
         </div>
     );
 
-    
+
 };
