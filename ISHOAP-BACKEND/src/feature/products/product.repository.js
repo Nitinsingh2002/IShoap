@@ -366,4 +366,60 @@ export default class productRepository {
             }
         }
     }
+
+
+
+
+
+    async seraching(query) {
+        try {
+           
+            // Escape special characters in the query
+            const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+            // Replace spaces with \s* to match any whitespace characters
+            // and handle the specific case where digits follow directly after letters
+            const modifiedQuery = escapedQuery
+                .replace(/\s+/g, '\\s*')  // Allow flexible spaces
+                .replace(/(\D)(\d)/g, '$1\\s*$2')  // Allow optional spaces between non-digits and digits
+                .replace(/(\d)(\D)/g, '$1\\s*$2');  // Allow optional spaces between digits and non-digits
+
+            // Construct regex pattern to match the modified query with case insensitive flag
+            const regexPattern = new RegExp(modifiedQuery, 'i');
+
+            // Find products matching the regex
+            let result = await ProductModel.find({ name: { $regex: regexPattern } });
+
+            if (result.length === 0) {
+                // No exact match found, performing fallback search
+                // Extract keywords from the query for the fallback search
+                //split the query when space comes eg hello who are you   => ["hello", "who", "are","you"] and after that we apply filter function which filter keyword which length is greater then 2 in this all 4 so keyword is ["hello", "who","are","you"]
+                const keywords = query.split(/\s+/).filter(word => word.length > 2); // Filter out very short words
+
+                if (keywords.length > 0) {
+                    // Create a regex pattern to match any of the keywords   eg-> hello | who | are |you
+                    const fallbackPattern = new RegExp(keywords.join('|'), 'i');
+
+                    // Perform the fallback search using the keywords
+                    result = await ProductModel.find({ name: { $regex: fallbackPattern } });
+
+                    if (result.length === 0) {
+                        throw new NotFoundError("No product found");
+                    }
+                } else {
+                    throw new NotFoundError("No product found");
+                }
+            }
+
+            return result;
+        }
+        catch (error) {
+
+            if (error instanceof NotFoundError) {
+                throw new NotFoundError(error.message)
+            } else {
+                throw new ApplicationError("something went wrong in fecthing product", 503)
+            }
+        }
+    }
 }

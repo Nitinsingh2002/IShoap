@@ -60,6 +60,14 @@ prdocutRoutes.get('/pending-product/:id', jwtauth, (req, res, next) => {
 })
 
 
+
+// to serach box functionality
+
+
+prdocutRoutes.get("/serach",(req,res,next)=>{
+    ProductController.serach(req,res,next)
+})
+
 export default prdocutRoutes;
 
 

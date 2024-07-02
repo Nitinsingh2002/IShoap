@@ -132,9 +132,21 @@ export default class productController {
         try {
             const id = req.params.id;
             const adminId = req.userId;
-            const result = await this.productRepository.singlePending(adminId,id);
+            const result = await this.productRepository.singlePending(adminId, id);
             return res.status(201).send(result);
 
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    // implement serach box functionality
+    async serach(req, res, next) {
+        try {
+            const { query } = req.query;
+            const result = await this.productRepository.seraching(query);
+            return res.status(201).send(result);
         } catch (error) {
             next(error)
         }
