@@ -1,0 +1,143 @@
+.main3-container {
+    margin-top: 10rem;
+    width: 100%;
+    margin-bottom: 10rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.main3-part1 {
+    width: 25%;
+    background-color: rgb(237, 247, 248);
+    height: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 15px;
+}
+
+
+.main3-part1 span {
+    background-color: white;
+    color: blue;
+    font-size: x-large;
+    height: 30%;
+    width: 22%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+
+
+.main3-part1 p {
+    font-weight: 500;
+    margin-top: 1rem;
+    font-size: larger;
+}
+
+.main3-part2 {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.part2-part1 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    background-color: rgb(237, 247, 248);
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border-radius: 15px;
+}
+
+.part2-row {
+    background-color: white;
+    color: blue;
+    font-size: x-large;
+    padding: 0.2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    margin-right: 0.5rem;
+}
+
+.para {
+    font-weight: 500;
+    font-size: larger;
+}
+
+
+@media screen and (max-width: 1200px) {
+
+    .para {
+        font-weight: 500;
+        font-size: small;
+        margin-top: 0.8rem;
+    }
+
+    .main3-part1 p {
+        font-weight: 500;
+        margin-top: 1rem;
+        font-size: small;
+    }
+
+}
+
+
+@media screen and (max-width: 991px) {
+
+    .main3-part1 {
+        width: 30%;
+    }
+
+    .main3-part2 {
+        width: 30%;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .main3-container {
+        flex-direction: column;
+    }
+
+    .main3-part1 span {
+        font-size: x-large;
+        height: 70px;
+        width: 70px;
+        border-radius: 50%;
+    }
+
+    .main3-part1 {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .main3-part2 {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .main3-part1 p {
+        font-size: larger !important;
+    }
+    .para {
+        font-size: larger !important;
+    }
+
+    .part2-row {
+        padding:  1rem;
+    }
+    .part2-part1{
+        margin-bottom: 1rem;
+    }
+
+}

@@ -1,0 +1,85 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(238, 254, 254);
+    padding: 15px 23px;
+    width: 100%;
+}
+
+.navbar-details {
+    gap: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: large;
+
+}
+
+.navbar-details i {
+    margin-right: 5px;
+    font-size: larger;
+}
+
+.navbar-details div:hover {
+    transition: color 0.3s linear;
+    color: rgb(209, 208, 208);
+}
+
+
+.user-info-nav {
+    text-decoration: none !important;
+    color: black;
+    font-size: 1.2rem;
+
+}
+
+.user-info-nav:hover {
+    transition: color 0.4s linear !important;
+    color: rgb(209, 208, 208);
+}
+
+.lastnavdiv {
+    display: none;
+}
+
+
+@media screen and (max-width: 767px) {
+    nav {
+        justify-content: space-between;
+        align-items: start;
+        position: relative;
+    }
+
+    .lastnavdiv {
+        display: block;
+    }
+
+    .navbar-details {
+        padding: 0%;
+        margin: 0;
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: flex-start;
+        align-items: start;
+        padding-top: 0.5rem;
+        position: absolute;
+        margin-top: 3rem;
+        left: -100%;
+        background-color: rgb(238, 254, 254);
+        width: 100%;
+        padding-left: 1rem;
+        padding-bottom: 1rem;
+        transition: all 0.3s linear;
+    }
+
+    .showMenu {
+        transition: all 0.3s linear;
+        left: 0%;
+        z-index: 100;
+    }
+
+    .icons {
+        font-size: 1.4rem;
+    }
+}

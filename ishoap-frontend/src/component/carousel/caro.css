@@ -1,0 +1,20 @@
+.carousel .slider-wrapper{
+    height: 50vh;
+}
+
+.carousel .slide img {
+    height: 50vh;
+}
+
+
+
+
+@media screen and (max-width: 767px) {
+    .carousel .slider-wrapper{
+        height: 35vh;
+    }
+    
+    .carousel .slide img {
+        height: 35vh;
+    }
+}

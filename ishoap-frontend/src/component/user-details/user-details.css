@@ -1,0 +1,179 @@
+.user-info {
+    background-color: rgb(233, 231, 231);
+    height: auto;
+    width: 100%;
+    min-height: 89vh;
+}
+
+.userInfo-parent {
+    width: 80%;
+    margin: auto;
+    /* background-color: red; */
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-info-sidebar {
+    width: 23%;
+}
+
+.user-info-container {
+    width: 74%;
+    height: auto;
+    min-height: 85vh;
+    background-color: white;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    padding-left: 1.5rem;
+    padding-top: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1.2rem;
+
+}
+
+.gretting {
+    background-color: white;
+    margin-top: 1rem;
+    padding-left: 1rem;
+    box-shadow: 0px 5px 15px rgba(160, 160, 160, 0.5);
+
+}
+
+.gretting p {
+    margin-bottom: 0%;
+    padding: 0%;
+    padding-top: 6px;
+}
+
+.gretting h5 {
+    padding-bottom: 8px;
+}
+
+.account-details {
+    background-color: white;
+    margin-top: 1.5rem;
+    box-shadow: 0px 5px 15px rgba(160, 160, 160, 0.5);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.account-details h5 {
+    color: rgb(131, 128, 128);
+    margin-bottom: 0.8rem;
+    padding-left: 1rem;
+}
+
+.account-details p {
+    margin: 0%;
+    padding: 0%;
+    width: 100%;
+    height: 2rem;
+    padding-left: 3rem;
+    font-weight: 500;
+    color: rgb(140, 138, 138);
+}
+
+.active {
+    color: blue !important;
+    background-color: azure;
+}
+
+.responsive-user-info {
+   margin-bottom: 0%;
+    font-size: large;
+    display: none;
+}
+
+
+@media screen and (max-width: 1100px) {
+    .userInfo-parent {
+        width: 85%;
+    }
+
+    .user-info-sidebar {
+        width: 27%;
+      
+    }
+
+    .user-info-container {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 970px) {
+    .userInfo-parent {
+        width: 90%;
+    }
+
+    .user-info-sidebar {
+        width: 30%;
+     
+    }
+
+    .user-info-container {
+        width: 67%;
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+    .gretting {
+        display: none;
+    }
+
+    .responsive-user-info {
+        width: 100%;
+        background-color: white;
+        font-size: large;
+        padding: 0.5rem 1rem;
+    }
+
+    .userInfo-parent {
+        width: 100%;
+        display: flex;
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    .user-info-container {
+        margin-top: 2rem;
+        width: 100%;
+        padding-left: 1.5rem;
+        margin-top: 1rem;
+
+    }
+
+    .user-info-sidebar {
+        position: relative;
+        width: 100%;
+        left: -120% !important;
+        margin-top: 0% !important;
+        height: 0px !important;
+        transition: all 0.3s linear;
+    }
+
+    .active-sidebar {
+        position: relative;
+        width: 100% !important;
+        left: 0% !important;
+        height: auto !important;
+        margin: 0% !important;
+        padding-top: 0% !important;
+        transition: all 0.3s linear;
+    }
+
+    .responsive-user-info {
+        margin-top: 1rem;
+        overflow: visible;
+        display: block;
+    }
+
+    .account-details{
+        margin:0%;
+        overflow: hidden;
+        box-shadow: none;
+    }
+
+
+}

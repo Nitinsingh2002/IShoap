@@ -1,0 +1,18 @@
+.input{
+    margin-top: 1rem;
+   padding: 0.5rem 1rem;
+   border: 1px solid black;
+   outline: none;
+}
+
+.input:hover{
+    border: 1px solid rgb(103, 125, 253);
+}
+
+.personal-email{
+    margin-top: 2.5rem;
+}
+.personal-email h6{
+    margin: 0%;
+    padding: 0%;
+}

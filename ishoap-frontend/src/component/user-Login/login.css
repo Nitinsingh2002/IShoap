@@ -1,0 +1,50 @@
+.login-form {
+    width: 25%;
+    margin: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgb(174, 174, 174);
+    border-radius: 15px;
+    padding-bottom: 1rem;
+    background-color: rgb(242, 246, 246);
+    margin-top: 5rem;
+}
+
+.login-form input {
+    background-color: rgb(242, 246, 246);
+}
+
+.login-form label {
+    font-weight: 500;
+}
+
+.google-button {
+    background-color: #DB4437; 
+    color: white;
+    text-transform: none; 
+    font-weight: 500; 
+}
+
+.google-button:hover {
+    background-color: #d41806;
+}
+
+
+@media screen and (max-width: 991px) {
+    .login-form {
+        width: 40%;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .login-form {
+        width: 100%;
+        border-radius: none;
+        height: 100vh;
+        margin-top: 0;
+        padding-top: 2rem;
+        box-shadow: none;
+    }
+}

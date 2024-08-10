@@ -1,0 +1,136 @@
+***************************Normal search functionality********************************
+            const decodedQuery = decodeURIComponent(query);
+
+            // Escape special characters in the query
+            const escapedQuery = decodedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+            // Replace spaces with \s* to match any whitespace characters
+            // and handle the specific case where digits follow directly after letters
+            const modifiedQuery = escapedQuery
+                .replace(/\s+/g, '\\s*')  // Allow flexible spaces
+                .replace(/(\D)(\d)/g, '$1\\s*$2')  // Allow optional spaces between non-digits and digits
+                .replace(/(\d)(\D)/g, '$1\\s*$2');  // Allow optional spaces between digits and non-digits
+
+            // Construct regex pattern to match the modified query with case insensitive flag
+            const regexPattern = new RegExp(modifiedQuery, 'i');
+
+            // Find products matching the regex
+            let result = await ProductModel.find({ name: { $regex: regexPattern } });
+
+
+*************normal search explanation******************************
+// Escape special characters in the query
+const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+Purpose: This step escapes any special characters in the query string.
+Regex Used: /[.*+?^${}()|[\]\\]/g
+Characters to Escape: . * + ? ^ $ { } ( ) | [ ] \
+Replacement: Each special character is prefixed with a backslash (\).
+Example: If the query is "Apple iPhone 15 (128 GB) - Black", it transforms to "Apple iPhone 15 \(128 GB\) \- Black".
+javascript
+Copy code
+// Replace spaces with \s* to match any whitespace characters
+// and handle the specific case where digits follow directly after letters
+const modifiedQuery = escapedQuery
+    .replace(/\s+/g, '\\s*')  // Allow flexible spaces
+    .replace(/(\D)(\d)/g, '$1\\s*$2')  // Allow optional spaces between non-digits and digits
+    .replace(/(\d)(\D)/g, '$1\\s*$2');  // Allow optional spaces between digits and non-digits
+Purpose: This step modifies the escaped query to allow for flexible whitespace matching.
+Step 1: .replace(/\s+/g, '\\s*')
+Regex Used: /\s+/g
+Pattern: Matches one or more whitespace characters.
+Replacement: Replaces each match with \\s* (matches zero or more whitespace characters).
+Example: "Apple iPhone 15 \(128 GB\) \- Black" transforms to "Apple\s*iPhone\s*15\s*\(128\s*GB\s*\)\s*\-\s*Black".
+Step 2: .replace(/(\D)(\d)/g, '$1\\s*$2')
+Regex Used: /(\D)(\d)/g
+Pattern: Matches a non-digit character followed by a digit.
+Capturing Groups: (\D) captures the non-digit character, (\d) captures the digit.
+Replacement: $1\\s*$2 inserts \\s* (optional whitespace) between the captured groups.
+Example: "Apple\s*iPhone\s*15" would not change, but "iPhone15" would become "iPhone\s*15".
+Step 3: .replace(/(\d)(\D)/g, '$1\\s*$2')
+Regex Used: /(\d)(\D)/g
+Pattern: Matches a digit followed by a non-digit character.
+Capturing Groups: (\d) captures the digit, (\D) captures the non-digit character.
+Replacement: $1\\s*$2 inserts \\s* (optional whitespace) between the captured groups.
+Example: "15GB" would become "15\s*GB".
+javascript
+Copy code
+// Construct regex pattern to match the modified query with case insensitive flag
+const regexPattern = new RegExp(modifiedQuery, 'i');
+Purpose: This step creates a regular expression object from the modified query.
+Parameters:
+modifiedQuery: The query string with escaped special characters and flexible whitespace handling.
+'i': The case-insensitive flag to ensure the search is not case-sensitive.
+Example: If the modifiedQuery is "Apple\s*iPhone\s*15\s*\(128\s*GB\s*\)\s*\-\s*Black", the regex object will be /Apple\s*iPhone\s*15\s*\(128\s*GB\s*\)\s*\-\s*Black/i.
+
+
+
+Summary
+The code snippet performs the following transformations on the user's search query:
+
+Escapes Special Characters: Ensures that any special characters in the query are treated as literals.
+Handles Flexible Whitespace: Replaces spaces with \s* to match zero or more whitespace characters, allowing for variations in user input.
+Handles Digit-Character Boundaries: Ensures that optional spaces are allowed between digits and non-digit characters and vice versa.
+Constructs the Regex: Creates a regular expression object from the modified query string, with case-insensitive matching enabled.
+
+
+
+
+
+
+
+
+*************  fall back code  if actual result not found *****************************************************************************************************
+// Extract keywords from the query for the fallback search
+const keywords = decodedQuery.split(/\s+/).filter(word => word.length > 2); // Filter out very short words
+
+if (keywords.length > 0) {
+    // Create a regex pattern to match any of the keywords
+    const fallbackPattern = new RegExp(keywords.join('|'), 'i');
+
+    // Perform the fallback search using the keywords
+    result = await ProductModel.find({ name: { $regex: fallbackPattern } });
+
+    if (result.length === 0) {
+        throw new NotFoundError("No product found");
+    }
+} else {
+    throw new NotFoundError("No product found");
+}
+
+**************fall back code explanation*****************************
+
+// Extract keywords from the query for the fallback search
+const keywords = decodedQuery.split(/\s+/).filter(word => word.length > 2); // Filter out very short words
+
+if (keywords.length > 0) {
+    // Create a regex pattern to match any of the keywords
+    const fallbackPattern = new RegExp(keywords.join('|'), 'i');
+
+    // Perform the fallback search using the keywords
+    result = await ProductModel.find({ name: { $regex: fallbackPattern } });
+
+    if (result.length === 0) {
+        throw new NotFoundError("No product found");
+    }
+} else {
+    throw new NotFoundError("No product found");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Note : for performing search activity we have to use $Regx of mongodb  (for better result)

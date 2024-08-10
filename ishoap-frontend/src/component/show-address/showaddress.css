@@ -1,0 +1,52 @@
+.single-address {
+    margin-bottom: 1rem;
+    border: 0.2px solid rgb(191, 188, 188);
+    padding: 0.7rem 0.8rem;
+
+}
+
+.name-mobile-container {
+    font-weight: bold;
+
+}
+
+.name-mobile-container span {
+    margin-right: 2rem;
+}
+
+.all-container span {
+    font-size: 0.9em;
+}
+
+.button-container {
+    float: right;
+}
+
+.delete:hover {
+
+    color: red;
+}
+
+.MenuItem {
+    font-size: 0.8rem !important;
+}
+
+.update:hover {
+    color: blue;
+    box-shadow: none !important;
+
+}
+
+.add-address-btn {
+    width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    display: flex !important;
+    justify-content: space-between !important;
+
+    
+    align-items: center !important;
+    color: white !important;
+    font-size: medium !important;
+    margin-bottom: 0.8rem !important;
+}

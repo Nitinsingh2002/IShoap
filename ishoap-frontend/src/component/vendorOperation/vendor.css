@@ -1,0 +1,182 @@
+.voarent{
+width: 100%;
+background-color: rgb(244, 243, 243);
+height: 89vh;
+}
+
+.vendor-full-page {
+    margin-top: 2rem;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    height: 84vh;
+}
+
+.side-bar {
+    width: 20%;
+    margin-top: 2rem;
+    height: 100%;
+}
+
+.vendor-content {
+    width: 78%;
+    padding-right: 1.5%;
+    padding-left: 1.5%;
+  background-color: white;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+.navlinkactive {
+    background-color: aqua !important;
+    width: 100%;
+    color: red;
+}
+
+
+.user-info-sidebarr {
+    width: 100%;
+}
+
+.responsive-user-info {
+    margin-bottom: 0%;
+    font-size: large;
+    display: none;
+}
+
+@media screen and (max-width: 1100px) {
+    .vendor-full-page {
+        width: 88%;
+    }
+
+    .side-bar {
+        width: 30%;
+    }
+
+    .account-details {
+        width: 100%;
+    }
+
+
+    .vendor-content {
+        width: 67% !important;
+    }
+}
+
+@media screen and (max-width: 970px) {
+    .vendor-full-page {
+        width: 92%;
+    }
+
+    .account-details {
+        width: 100%;
+    }
+
+    .side-bar {
+        width: 27%;
+    }
+
+
+
+    .vendor-content {
+        width: 65%;
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+    .gretting {
+        display: none;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+
+    .vendor-full-page {
+        width: 100%;
+        flex-direction: column;
+        background-color: gray;
+        height: 92vh;
+    }
+
+    .side-bar {
+        width: 100%;
+        margin-top: 1rem;
+        height: auto;
+
+    }
+
+    .vendor-content {
+        width: 100% !important;
+        margin-top: 1rem;
+        background-color: white;
+        padding-top: 0.5rem;
+
+    }
+
+    .responsive-user-info {
+        width: 100%;
+        background-color: white;
+        font-size: large;
+        padding: 0.5rem 1rem;
+    }
+
+    .userInfo-parent {
+        width: 100%;
+        display: flex;
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    .user-info-container {
+        margin-top: 2rem;
+        width: 100%;
+        padding-left: 1.5rem;
+        margin-top: 1rem;
+
+    }
+
+    .user-info-sidebarr {
+        position: relative;
+        width: 100%;
+        left: -120% !important;
+        margin-top: 0% !important;
+        height: 0px !important;
+        transition: all 0.3s linear;
+    }
+
+    .active-sidebar {
+        position: relative;
+        width: 100% !important;
+        left: 0% !important;
+        height: auto !important;
+        margin: 0% !important;
+        padding-top: 0% !important;
+        transition: all 0.3s linear;
+    }
+
+    .responsive-user-info {
+        margin-top: 1rem;
+        overflow: visible;
+        display: block;
+    }
+
+    .account-details {
+        margin: 0%;
+        overflow: hidden;
+        box-shadow: none;
+    }
+
+
+}
