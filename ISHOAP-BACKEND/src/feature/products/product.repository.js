@@ -401,7 +401,7 @@ export default class productRepository {
 
 
             // Find products matching the regex
-            let result = await ProductModel.find(filterQuery);
+            let result = await ProductModel.find(filterQuery).populate('vendorId', { password: 0 , email:0,mobile:0});
 
             if (result.length === 0) {
                 // No exact match found, performing fallback search

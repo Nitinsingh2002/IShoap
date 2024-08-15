@@ -36,6 +36,9 @@ import { SinglePendingProduct } from "./component/Admin-operation/single-product
 import { Test } from "./component/test";
 import { ListOfAddress } from "./component/OrderComponent/ListOfAddress";
 import { AdForm } from "./component/OrderComponent/adressForm";
+import { SearchBar } from "./component/serachFunctionality/SearchBar";
+import { SearchPage } from "./component/serachFunctionality/searchpage/searchPage";
+
 
 
 
@@ -51,7 +54,7 @@ function App() {
           <Route path="/login" element={<Userlogin />} />
           <Route path="/admin/login" element={<AdminLogin />}></Route>
           <Route path="/user-info" element={<> <Navbar /> <UserInfo /></>} />
-          <Route path="/product" element={<><Navbar /> <Product /> <Footer /></>} />
+          <Route path="/product" element={<><Navbar /><SearchBar/> <Product /> <Footer /></>} />
           <Route path="/product/:id" element={<><Navbar /><SingleProduct /></>} />
           <Route path="/rate-product/:id" element={<><Navbar /> <RateProduct /></>} />
           <Route path="/cart" element={<><Navbar /><CartPage /></>} />
@@ -59,6 +62,7 @@ function App() {
           <Route path="/vendor/login" element={<VendorLogin />} />
           <Route path="/order/address" element={<><Navbar/><ListOfAddress /></>} />
           <Route path= "/order/add-address" element ={<><Navbar/> <AdForm/></>}/>
+          <Route path="/search/:query" element= {<><Navbar/><SearchBar/> <SearchPage/></>}/>
 
 
           <Route path="/vendor" element={<VendorNavbar />}>
