@@ -1,25 +1,35 @@
 import { Box } from "@mui/material"
 import React, { useState } from "react"
-import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { fetchSearchResults, setQuery } from "../../Redux/searchReducer/SearchReducer";
+import { AppDispatch, RootState } from '../../Redux/store'
+import { useSelector } from "react-redux";
+
+
 
 export const SearchBar = () => {
-    const [searchData, setSearchData] = useState<String | undefined>(undefined);
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>()
 
     const handleSearchchnage = (e: any) => {
-        setSearchData(e.target.value);
+        dispatch(setQuery(e.target.value));
     }
+
+    const { query } = useSelector((state: RootState) => state.search);
 
     // trim is used to remove leading and trailing withspace and it will return false when string is empty
     const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (searchData?.trim() && e.key === 'Enter') {
-            navigate(`/search/${searchData}`)
+        if (query?.trim() && e.key === 'Enter') {
+            navigate(`/search/${query}`)
+            dispatch(fetchSearchResults({ query }));
         }
     }
 
     const handleSearchbutton = () => {
-        if (searchData?.trim()) {
-            navigate(`/search/${searchData}`)
+        if (query?.trim()) {
+            navigate(`/search/${query}`)
+            dispatch(fetchSearchResults({ query }));
         }
     }
 

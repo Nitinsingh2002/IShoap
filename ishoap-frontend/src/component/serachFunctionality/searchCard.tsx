@@ -1,50 +1,26 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"
-import { ProductDetails } from '../../contract/productDetails.contract';
-import { useFetchApi } from "../../Custom-Hooks/useFetchApi";
-import { useCookies } from "react-cookie";
+
 import Loadingcomponent from "../Loading/Loading";
-import { AddBox } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import './searchCard.css'
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from '../../Redux/store';
+
 
 export const SearchCard = () => {
-    const { query } = useParams();
-    const [searchResult, setSearchResult] = useState<ProductDetails[]>([]);
 
-    const [error, setError] = useState();
-    const [loading, setLoading] = useState<boolean>(true);
-    const fetchDataFromApi = useFetchApi();
-    const [cookies, setCookie, removeCookie] = useCookies(['token']);
-    const token = cookies['token'];
-    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    const { searchData: searchResult, loading, error } = useSelector((state: RootState) => state.search);
 
-    const LoadSearchResult = async (query: any) => {
-        console.log("function called")
-        setLoading(true);
-        const result = await fetchDataFromApi({
-            url: `http://localhost:8000/product/serach/?query=${query}`,
-            method: "GET",
-            token: token,
-        })
-        if (result.error) {
-            setError(result.error);
+    const trimWord = (s: string): string => {
+        const length = s.length;
+        if (length > 70) {
+            let str = s.substring(0, 70) + "..."
+            return str;
         } else {
-            console.log("response feacthed from api", result.response)
-            setSearchResult(result.response);
+            return s;
         }
-        setLoading(false);
     }
-
-    useEffect(() => {
-        if (!token) {
-            navigate('/login');
-        } else {
-            LoadSearchResult(query);
-        }
-    }, [])
-
-    console.log(searchResult)
 
     return (
         <>
@@ -66,30 +42,32 @@ export const SearchCard = () => {
                                 <div className="search_card_conatiner">
                                     {
                                         searchResult.map((data) => (
-                                            <div className="search_card" key={data._id}>
-                                                <div className="card_image">
-                                                    <img className="search_card_img"
-                                                        src={`http://localhost:8000/images/${data.image[0]}`}
-                                                    />
-                                                </div>
-                                                <div className="card_details">
-                                                    <div className="card_details_name">{data.name}</div>
-                                                    <div>
-                                                        <span className="card_details_left_side">Special Price: </span>
-                                                        <span className="bold"> {data.price.toLocaleString('en-In', { style: 'currency', currency: 'INR' })}</span>
-                                                        <span className="dicPrice"><s>{(data.price + 200).toLocaleString('en-In', { style: 'currency', currency: 'INR' })}</s></span>
+                                            <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/product/${data._id}`} key={data._id}>
+                                                <div className="search_card" >
+                                                    <div className="card_image">
+                                                        <img className="search_card_img"
+                                                            src={`http://localhost:8000/images/${data.image[0]}`}
+                                                        />
                                                     </div>
-                                                    <div> <span className="card_details_left_side">Sold By:</span><span className="bold"> {(data.vendorId.name)} </span> </div>
-                                                    <div>
-                                                        <span className="card_details_left_side">Rating: </span>
-                                                        <span className="bold">{data.rating.rate}</span>
-                                                        <span className="bi bi-star-fill    color_star" ></span>
-                                                    </div>
-                                                
-                                                    <div><span className="bold">{data.stock > 0 ? "In Stock" : "Out of stock"}</span></div>
+                                                    <div className="card_details">
+                                                        <div className="card_details_name">{trimWord(data.name)}</div>
+                                                        <div>
+                                                            <span className="card_details_left_side">Special Price: </span>
+                                                            <span className="bold"> {data.price.toLocaleString('en-In', { style: 'currency', currency: 'INR' })}</span>
+                                                            <span className="dicPrice"><s>{(data.price + 200).toLocaleString('en-In', { style: 'currency', currency: 'INR' })}</s></span>
+                                                        </div>
+                                                        <div> <span className="card_details_left_side">Sold By:</span><span className="bold"> {(data.vendorId.name)} </span> </div>
+                                                        <div>
+                                                            <span className="card_details_left_side">Rating: </span>
+                                                            <span className="bold">{data.rating.rate}</span>
+                                                            <span className="bi bi-star-fill    color_star" ></span>
+                                                        </div>
 
+                                                        <div><span className="bold">{data.stock > 0 ? "In Stock" : "Out of stock"}</span></div>
+
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </Link>
                                         ))
                                     }
                                 </div>

@@ -1,21 +1,41 @@
-import { Box, Button, Divider, InputAdornmentClasses } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { AppDispatch, RootState } from '../../Redux/store';
+import { fetchSearchResults, setMaxPrice, setMinPrice } from '../../Redux/searchReducer/SearchReducer';
+import { useSelector } from 'react-redux';
+
+
 
 export const Filter = () => {
-    const [minPrice, setMinPrice] = useState<number>();
-    const [maxPrice, setMaxPrice] = useState<number>();
+
+    const dispatch = useDispatch<AppDispatch>();
+    // const { query } = useParams();
+
+    const { query, minPrice, maxPrice } = useSelector((state: RootState) => state.search);
 
     const handleMinPrice = (e: any) => {
-        setMinPrice(e.target.value);
+        const value = e.target.value;
+        dispatch(setMinPrice(value ? parseFloat(value) : undefined));
+
     }
     const handleMaxPrice = (e: any) => {
-        setMaxPrice(e.target.value);
+        const value = e.target.value;
+        dispatch((setMaxPrice(value ? parseFloat(value) : undefined)));
+
     }
 
-    const handleFilter  = (e:any) =>{
-          alert("filter button clicked")
+    const handleFilter = (e: any) => {
+        if (query != undefined) {
+            dispatch(fetchSearchResults({ query, minPrice, maxPrice }))
+        }
     }
+
+
+
+
 
     return (
         <>
@@ -44,8 +64,8 @@ export const Filter = () => {
                 />
             </Box>
             <Button
-            onClick={handleFilter}
-             variant="contained" size="small" sx={{ mt: 1 }}>
+                onClick={handleFilter}
+                variant="contained" size="small" sx={{ mt: 1 }}>
                 Apply filter
             </Button>
         </>

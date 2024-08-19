@@ -144,9 +144,10 @@ export default class productController {
     // implement serach box functionality
     async serach(req, res, next) {
         try {
-            const { minprice, maxPrice } = req.body;
+            const { minPrice, maxPrice } = req.query;
             const { query } = req.query;
-            const result = await this.productRepository.seraching(query, minprice, maxPrice);
+            console.log("min price", minPrice, "maxPrice", maxPrice);
+            const result = await this.productRepository.seraching(query, minPrice, maxPrice);
             return res.status(201).send(result);
         } catch (error) {
             next(error)

@@ -38,6 +38,10 @@ import { ListOfAddress } from "./component/OrderComponent/ListOfAddress";
 import { AdForm } from "./component/OrderComponent/adressForm";
 import { SearchBar } from "./component/serachFunctionality/SearchBar";
 import { SearchPage } from "./component/serachFunctionality/searchpage/searchPage";
+import { store } from "./Redux/store";
+import { Provider } from 'react-redux'
+
+
 
 
 
@@ -47,53 +51,55 @@ import { SearchPage } from "./component/serachFunctionality/searchpage/searchPag
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<><Navbar /><Main /><Footer /></>} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Userlogin />} />
-          <Route path="/admin/login" element={<AdminLogin />}></Route>
-          <Route path="/user-info" element={<> <Navbar /> <UserInfo /></>} />
-          <Route path="/product" element={<><Navbar /><SearchBar/> <Product /> <Footer /></>} />
-          <Route path="/product/:id" element={<><Navbar /><SingleProduct /></>} />
-          <Route path="/rate-product/:id" element={<><Navbar /> <RateProduct /></>} />
-          <Route path="/cart" element={<><Navbar /><CartPage /></>} />
-          <Route path="/vendor/registration" element={<><VendorRegistration /></>} ></Route>
-          <Route path="/vendor/login" element={<VendorLogin />} />
-          <Route path="/order/address" element={<><Navbar/><ListOfAddress /></>} />
-          <Route path= "/order/add-address" element ={<><Navbar/> <AdForm/></>}/>
-          <Route path="/search/:query" element= {<><Navbar/><SearchBar/> <SearchPage/></>}/>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<><Navbar /><Main /><Footer /></>} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Userlogin />} />
+            <Route path="/admin/login" element={<AdminLogin />}></Route>
+            <Route path="/user-info" element={<> <Navbar /> <UserInfo /></>} />
+            <Route path="/product" element={<><Navbar /><SearchBar /> <Product /> <Footer /></>} />
+            <Route path="/product/:id" element={<><Navbar /><SingleProduct /></>} />
+            <Route path="/rate-product/:id" element={<><Navbar /> <RateProduct /></>} />
+            <Route path="/cart" element={<><Navbar /><CartPage /></>} />
+            <Route path="/vendor/registration" element={<><VendorRegistration /></>} ></Route>
+            <Route path="/vendor/login" element={<VendorLogin />} />
+            <Route path="/order/address" element={<><Navbar /><ListOfAddress /></>} />
+            <Route path="/order/add-address" element={<><Navbar /> <AdForm /></>} />
+            <Route path="/search/:query" element={<><Navbar /><SearchBar /> <SearchPage /></>} />
 
 
-          <Route path="/vendor" element={<VendorNavbar />}>
-            <Route index element={<VendorProduct />} />
-            <Route path="/vendor" element={<VendorOpertion />}>
-              <Route path="details" element={<VendorDetails></VendorDetails>} />
-              <Route path="update-details" element={<VendorUpdateDetails />} />
-              <Route path="add-product" element={<VendorAddProduct />} />
+            <Route path="/vendor" element={<VendorNavbar />}>
+              <Route index element={<VendorProduct />} />
+              <Route path="/vendor" element={<VendorOpertion />}>
+                <Route path="details" element={<VendorDetails></VendorDetails>} />
+                <Route path="update-details" element={<VendorUpdateDetails />} />
+                <Route path="add-product" element={<VendorAddProduct />} />
+              </Route>
             </Route>
-          </Route>
 
 
-          {/* admin routes start from here */}
-          <Route path="/admin" element={<><AdminNavbar /><AdminDashboard /></>}>
-            <Route index element={<AdminAllProductList />} />
-            <Route path="all-product" element={<AdminAllProductList />} />
-            <Route path="add-product" element={<AdminAddProduct />} />
-            <Route path="update-product/:id" element={<AdminUpdateProduct />} />
-            <Route path="all-vendor" element={<VendorList />} />
-            <Route path="all-user" element={<UserList />} />
-            <Route path="all-category" element={<CategoryList />} />
-            <Route path="add-category" element={<AddCategory />} />
-            <Route path="update-category/:id" element={<UpdateCategory />} />
-            <Route path="pending-product" element={<PendingProduct />} />
-          </Route>
-          <Route path="admin/pending-product/:id" element={<><Navbar /><SinglePendingProduct /></>} />
+            {/* admin routes start from here */}
+            <Route path="/admin" element={<><AdminNavbar /><AdminDashboard /></>}>
+              <Route index element={<AdminAllProductList />} />
+              <Route path="all-product" element={<AdminAllProductList />} />
+              <Route path="add-product" element={<AdminAddProduct />} />
+              <Route path="update-product/:id" element={<AdminUpdateProduct />} />
+              <Route path="all-vendor" element={<VendorList />} />
+              <Route path="all-user" element={<UserList />} />
+              <Route path="all-category" element={<CategoryList />} />
+              <Route path="add-category" element={<AddCategory />} />
+              <Route path="update-category/:id" element={<UpdateCategory />} />
+              <Route path="pending-product" element={<PendingProduct />} />
+            </Route>
+            <Route path="admin/pending-product/:id" element={<><Navbar /><SinglePendingProduct /></>} />
 
 
 
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </>
   );
 }
