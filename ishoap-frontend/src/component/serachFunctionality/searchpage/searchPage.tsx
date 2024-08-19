@@ -46,15 +46,25 @@ export const SearchPage = () => {
 
     return (
         <>
-            <Box sx={{ width: '100vw', padding: '1rem', display: 'flex', pb: 0 }}>
+            <Box sx={{
+                width: '100vw',
+                minHeight: "90vh",
+                padding: { xs: '0.5rem 0', sm: '0.5rem 1rem' },
+                bgcolor: 'rgb(233, 231, 231)',
+                display: 'flex', pb: 0,
+
+                gap: '1vw',
+                flexDirection: { xs: 'column', sm: 'row' }
+            }}>
 
                 {
                     !error &&
-                    <Box sx={{ width: '20vw', }}>
+                    <Box sx={{ width: { xs: '100vw', sm: '20vw' } }}>
                         <Filter />
                     </Box>
                 }
-                <Box sx={{ width: error ? '100vw' : '80vw', }}>
+                <Box sx={{ width: error ? '100vw' : { xs: '100vw', sm: '79vw' } }}>
+
                     <SearchCard />
                 </Box>
 

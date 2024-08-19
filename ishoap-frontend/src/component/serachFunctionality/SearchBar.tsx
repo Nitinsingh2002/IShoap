@@ -42,9 +42,10 @@ export const SearchBar = () => {
                     onKeyUp={handleSearch}
                     onChange={handleSearchchnage}
                     placeholder="search product in ishaop"
-                    style={{ width: '92vw', height: '2.5rem', textAlign: 'center', outline: 'none', border: '1px solid gray', color: 'gray', borderRight: 'none' }} />
+                    className="responsive-input"
+                />
                 <button
-                    style={{ width: '8vw', height: '2.5rem', outline: 'none', border: '1px solid gray', borderLeft: 'none' }}
+                    className="searchButton"
                     onClick={handleSearchbutton}>
                     Search
                 </button>

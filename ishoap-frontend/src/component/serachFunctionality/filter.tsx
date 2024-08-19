@@ -11,8 +11,10 @@ import { useSelector } from 'react-redux';
 
 export const Filter = () => {
 
+
+    const [showFilterButton, setShowFilterButton] = useState<boolean>(true);
     const dispatch = useDispatch<AppDispatch>();
-    // const { query } = useParams();
+
 
     const { query, minPrice, maxPrice } = useSelector((state: RootState) => state.search);
 
@@ -34,40 +36,63 @@ export const Filter = () => {
     }
 
 
+    const handleShowFilter = () => {
+        setShowFilterButton(!showFilterButton);
+    }
+
 
 
 
     return (
         <>
-            <Typography variant='h6' sx={{}}>Filter options</Typography>
-            <hr style={{ marginRight: '0.5rem', marginTop: '0.3rem' }} />
+            <Box sx={{ bgcolor: "white", borderRadius: '5px', paddingLeft: '0.75rem', paddingBottom: { xs: 1, sm: 2 },paddingTop:{xs:1,sm:0} }}>
 
-            <Box sx={{ display: "flex", gap: "0.3rem", alignContent: 'center' }}>
-                <Typography variant='body2'>Min price :</Typography>
-                <input type=" text"
-                    value={minPrice}
-                    onChange={handleMinPrice}
-                    style={{ borderRadius: "8px", outline: "none", border: '1px solid gray', width: '8vw', paddingLeft: '0.5rem', color: 'gray' }}
-                />
+
+                <Box sx={{ display: { xs: 'block', sm: 'none' }, justifyContent: 'center', alignItems: 'center' }}>
+                    {
+                        showFilterButton ?
+                            <Typography variant="h6" onClick={handleShowFilter}  >  <i className="bi bi-list"></i>  Filter Option </Typography>
+                            :
+                            <Typography variant="h6" onClick={handleShowFilter} > <i className="bi bi-x-circle-fill"></i>    </Typography>
+                    }
+                </Box>
+
+
+
+                <Typography variant='h6' sx={{ display: { xs: 'none', sm: 'block' } }}>Filter options</Typography>
+
+                <hr className='searchHr' />
+
+                <Box className={showFilterButton ? "slidingFilter" : "reverseSliding"}
+                    sx={{ display: { xs: 'flex', sm: "block" }, justifyContent: 'space-between', alignItems: 'center', padding: { xs: '0 0.5rem', sm: 0 } }}
+                >
+
+
+                    <Box sx={{ display: "flex", gap: "0.3rem", alignItems: 'center', }}>
+                        <Typography variant='body2'>Min price :</Typography>
+                        <input type=" text"
+                            value={minPrice}
+                            onChange={handleMinPrice}
+                            className='inputSearchMinMax'
+                        />
+                    </Box>
+
+
+                    <Box sx={{ display: "flex", gap: "0.3rem", mt: { xs: 0, sm: 2 }, alignItems: 'center' }}>
+                        <Typography variant='body2'>Max price :</Typography>
+                        <input type=" text"
+                            value={maxPrice}
+                            onChange={handleMaxPrice}
+                            className='inputSearchMinMax'
+                        />
+                    </Box>
+                    <Button
+                        onClick={handleFilter}
+                        variant="contained" size="small" sx={{ mt: { xs: 0, sm: 1 } }}>
+                        Apply filter
+                    </Button>
+                </Box>
             </Box>
-
-
-            <Box sx={{ display: "flex", gap: "0.3rem", mt: 2, alignContent: 'center' }}>
-                <Typography variant='body2'>Max price :</Typography>
-                <input type=" text"
-                    value={maxPrice}
-                    onChange={handleMaxPrice}
-                    style={{
-                        borderRadius: "8px", outline: "none", border: '1px solid gray',
-                        width: '8vw', paddingLeft: '0.5rem', color: 'gray'
-                    }}
-                />
-            </Box>
-            <Button
-                onClick={handleFilter}
-                variant="contained" size="small" sx={{ mt: 1 }}>
-                Apply filter
-            </Button>
         </>
     )
 }

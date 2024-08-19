@@ -7,7 +7,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
-
+import { ThemeProvider } from '@mui/material';
+import { theme } from './component/CustomMedia'
 
 
 
@@ -18,9 +19,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
 
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+  <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <ThemeProvider theme={theme}>
       <App />
-    </LocalizationProvider>
+    </ThemeProvider>
+  </LocalizationProvider>
 
 );
 
