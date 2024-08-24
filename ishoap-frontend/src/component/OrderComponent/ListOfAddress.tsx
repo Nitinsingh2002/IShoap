@@ -13,6 +13,8 @@ export const ListOfAddress = () => {
     const [error, setError] = useState<string | null>(null);
     const [address, setAddress] = useState<AddressContract[]>();
 
+    const [selectedAddress, setSelectedAddress] = useState<AddressContract>();
+
 
     const fetchDataFromApi = useFetchApi();
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -36,6 +38,15 @@ export const ListOfAddress = () => {
         }
         SetLoading(false);
     }
+
+
+    const handleSelectedAddress = (id: string) => {
+        const selAddress = address?.find((singleAddress) => singleAddress._id == id);
+        setSelectedAddress(selAddress);
+    }
+
+
+
 
     useEffect(() => {
         if (!token) {
@@ -80,7 +91,9 @@ export const ListOfAddress = () => {
 
                                 {
                                     address?.map((a, index) => (
-                                        <div className='single-address' key={index}>
+                                        <div className={selectedAddress?._id == a._id ? "single-address activeAdres" : "single-address"} key={index}
+                                            onClick={() => handleSelectedAddress(a._id)}
+                                        >
                                             <div className='name-mobile-container'>
                                                 <span>{a.name}</span>
                                                 <span>{a.mobile}</span>
@@ -96,12 +109,24 @@ export const ListOfAddress = () => {
                                     ))
                                 }
 
+                                {
+                                    selectedAddress && <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                                        <Button variant="contained" color="error" >continue</Button>
+                                    </div>
+
+                                }
                             </div>
+
+
+
+
+
+
                         )
 
                     }
                 </div>
-            </div>
+            </div >
         </>
     )
 }
