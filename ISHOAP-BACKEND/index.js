@@ -14,10 +14,10 @@ import ratingRoutes from './src/feature/productRating/rating.routes.js'
 import cartRoutes from './src/feature/cart/cart.route.js';
 import orderRoutes from './src/feature/order/order.routes.js';
 import passport from 'passport';
-
 import './src/config/google.js'
 import './src/config/github.js'
-
+import paymentRouter from './src/feature/Payment/Payment.route.js';
+import Razorpay from 'razorpay';
 
 
 
@@ -39,8 +39,9 @@ app.use("/category", categoryRoutes);
 app.use("/vendor", vendorRoutes)
 app.use("/product", prdocutRoutes);
 app.use("/rating", jwtauth, ratingRoutes)
-app.use("/cart",jwtauth,cartRoutes);
-app.use("/order",jwtauth,orderRoutes)
+app.use("/cart", jwtauth, cartRoutes);
+app.use("/order", orderRoutes)
+app.use("/payment",paymentRouter);
 
 app.get("/", (req, res) => {
     return res.send("welcome to Ishoap api");
@@ -50,8 +51,26 @@ app.get("/", (req, res) => {
 app.use('/images', express.static('public/images'));
 
 
+
+//   RAZOR PAY SETUP  ( creating instance of razor pay)
+
+export const instance = new Razorpay({
+    key_id: process.env.RAZOR_PAY_KEY,
+    key_secret: process.env.RAZOR_PAY_SECRET,
+});
+
+
+
+
+
+
+
+
+
+
+
 app.use((error, req, res, next) => {
-  
+
     if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ApplicationError) {
         return res.status(error.code).send(error.message);
     } else {
