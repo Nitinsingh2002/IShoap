@@ -40,6 +40,7 @@ import { SearchBar } from "./component/serachFunctionality/SearchBar";
 import { SearchPage } from "./component/serachFunctionality/searchpage/searchPage";
 import { store } from "./Redux/store";
 import { Provider } from 'react-redux'
+import { OrderSuccess } from "./component/OrderSucess/OrderSucess";
 
 
 
@@ -68,6 +69,7 @@ function App() {
             <Route path="/order/address" element={<><Navbar /><ListOfAddress /></>} />
             <Route path="/order/add-address" element={<><Navbar /> <AdForm /></>} />
             <Route path="/search/:query" element={<><Navbar /><SearchBar /> <SearchPage /></>} />
+            <Route path="/order/sucessful"   element = {<><Navbar/><OrderSuccess/></>} />
 
 
             <Route path="/vendor" element={<VendorNavbar />}>

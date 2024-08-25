@@ -7,6 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Loadingcomponent from "../Loading/Loading";
 import { Button } from "@mui/material";
 import './orderAdress.css'
+import axios from "axios";
+import Razorpay from 'razorpay';
+
 
 export const ListOfAddress = () => {
     const [loading, SetLoading] = useState<boolean>(true);
@@ -20,6 +23,7 @@ export const ListOfAddress = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
     const token = cookies['token'];
     const navigate = useNavigate();
+    const ammount = 500;
 
     async function LoadAddress(): Promise<void> {
         const result = await fetchDataFromApi({
@@ -43,6 +47,54 @@ export const ListOfAddress = () => {
     const handleSelectedAddress = (id: string) => {
         const selAddress = address?.find((singleAddress) => singleAddress._id == id);
         setSelectedAddress(selAddress);
+    }
+
+
+
+
+
+    const HandlePayment = async () => {
+        console.log("trying to call checkout ")
+        try {
+            const result = await axios.post("http://localhost:8000/payment/checkout", { ammount });
+            console.log(result.data);
+
+            const keyID = " rzp_test_CIy6z3k40WoX6Z"
+            // call back url for payment  
+
+            const options = {
+                key_id: keyID,
+                amount: result.data.amount,
+                currency: "INR",
+                name: "Ishoap",
+                description: "Test Transaction",
+                image: "./logo192.png",
+                order_id: "order_IluGWxBm9U8zJ8",    //   we have  to create 
+                callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
+                prefill: {
+                    name: "Gaurav Kumar",
+                    email: "gaurav.kumar@example.com",
+                    contact: "9000090000"
+                },
+                notes: {
+                    address: "RAZOR PAY OFFICE"
+                },
+                theme: {
+                    color: "#3399cd"
+                }
+            };
+
+
+            const rzp1 = new Razorpay(options);
+
+
+            // document.getElementById('rzp-button1').onclick = function (e) {
+            //     rzp1.open();
+            // }
+
+        } catch (error) {
+
+        }
     }
 
 
@@ -111,16 +163,13 @@ export const ListOfAddress = () => {
 
                                 {
                                     selectedAddress && <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                                        <Button variant="contained" color="error" >continue</Button>
+                                        <Button variant="contained" color="error" onClick={HandlePayment}>
+                                            Payment
+                                        </Button>
                                     </div>
 
                                 }
                             </div>
-
-
-
-
-
 
                         )
 
