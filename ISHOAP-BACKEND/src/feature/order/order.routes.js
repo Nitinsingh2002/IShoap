@@ -14,6 +14,10 @@ orderRoutes.get("/get-order", (req, res, next) => {
     OrderController.get(req, res, next)
 })
 
+orderRoutes.get("/get-currentOrder/:orderId", (req, res, next) => {
+    OrderController.getCurrentOrderId(req, res, next);
+})
+
 export default orderRoutes;
 
 

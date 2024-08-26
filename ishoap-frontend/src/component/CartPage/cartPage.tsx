@@ -7,18 +7,24 @@ import './cartpage.css'
 import { Button } from "@mui/material";
 import { ReusableModal } from "../Resuable-modal/ReuasbleModal";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../Redux/store";
+import { setCartProduct } from "../../Redux/OrderReducer/OrderReducer";
+import { useSelector } from "react-redux";
 
 export const CartPage = () => {
     const fetchDataFromApi = useFetchApi();
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
-    const [cartData, setCartData] = useState<CartDetails[]>([]);
     const token = cookies['token'];
     const [finalPrice, setFinalPrice] = useState<number>();
     const [qunatity, setQunatity] = useState<number>(0)
     const [showQuantityButton, setShowQuantityButton] = useState<number | null>(null);
     const [cartUpdated, setCartUpdated] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+    const cartProducts = useSelector((state: RootState) => state.order.cartProducts);
+    
+    const dispatch = useDispatch<AppDispatch>();
 
 
     const loadCartData = async () => {
@@ -33,14 +39,14 @@ export const CartPage = () => {
                 autoClose: 1000
             });
         } else {
-            setCartData(result.response);
+            dispatch(setCartProduct(result.response));
             calculateFinalPrice();
         }
 
     };
 
     const calculateFinalPrice = () => {
-        const sum = cartData.reduce((accumulator, product) => accumulator + product.totalPrice, 0);
+        const sum = cartProducts.reduce((accumulator, product) => accumulator + product.totalPrice, 0);
         console.log("sum is ", sum);
         setFinalPrice(sum);
     }
@@ -123,7 +129,6 @@ export const CartPage = () => {
 
 
 
-    console.log(cartData)
 
     useEffect(() => {
         loadCartData();
@@ -135,7 +140,7 @@ export const CartPage = () => {
         <div className="table-container">
             <ToastContainer />
 
-            {cartData.length === 0 ? (
+            {cartProducts.length === 0 ? (
                 <p className="empty-cart">Your cart is currently empty.</p>
             ) : (
                 <table className="table-cart">
@@ -150,7 +155,7 @@ export const CartPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {cartData.map((item, index) => (
+                        {cartProducts.map((item, index) => (
                             <tr key={index}>
                                 <td className="cart-table-data cart-table-image"> <img src={`http://localhost:8000/images/${item.productId.image[0]}`} /></td>
                                 <td className="cart-table-data">{item.productId.name}</td>

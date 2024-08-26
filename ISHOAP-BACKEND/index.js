@@ -40,7 +40,7 @@ app.use("/vendor", vendorRoutes)
 app.use("/product", prdocutRoutes);
 app.use("/rating", jwtauth, ratingRoutes)
 app.use("/cart", jwtauth, cartRoutes);
-app.use("/order", orderRoutes)
+app.use("/order",jwtauth, orderRoutes)
 app.use("/payment",paymentRouter);
 
 app.get("/", (req, res) => {

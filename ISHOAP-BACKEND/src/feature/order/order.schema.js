@@ -21,16 +21,25 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    // status: {
-    //     type: String,
-    //     enum: ['Pending', 'Processing', 'Shipped', 'Delivered'],
-    //     default: 'Pending'
-    // },
-    createdAt: {
-        type: Date,
-        default: Date.now
+    AddressId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'addresses',
+        required: true
+    },
+    paymentStatus: {
+        type: String,
+        enum: ['pending', 'completed'],
+        default: 'pending'
     }
-});
+    ,
+    PaymentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'payments',
+    }
+
+}, { timestamps: true });
+
+
 
 const OrderModel = mongoose.model('Order', orderSchema);
 

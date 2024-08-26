@@ -1,6 +1,7 @@
 import ApplicationError from "../../../Error/application.error.js";
 import NotFoundError from "../../../Error/notFound.error.js";
 import ValidationError from "../../../Error/validation.error.js";
+import PaymentModel from "../Payment/Payment.Schema.js";
 import userModel from "../User/user.schema.js";
 import ProductModel from "../products/product.schema.js";
 import OrderModel from "./order.schema.js";
@@ -8,12 +9,18 @@ import OrderModel from "./order.schema.js";
 export default class orderRepository {
 
 
-    async add(userId, products) {
+    async add(userId, products, addressId, paymentId) {
         try {
+
+            if (!userId || !products || !addressId) {
+                throw new NotFoundError("please provide all details");
+            }
             const user = await userModel.findById(userId);
             if (!user) {
                 throw new NotFoundError("User not found to place order.");
             }
+
+
 
             let totalPrice = 0;
             for (const product of products) {
@@ -36,15 +43,21 @@ export default class orderRepository {
 
                 totalPrice += subtotal;
             }
+
+
             const order = new OrderModel({
                 userId: userId,
                 products: products,
-                totalPrice: totalPrice
+                totalPrice: totalPrice,
+                AddressId: addressId,
+                PaymentId: paymentId,
+                paymentStatus:'pending'
             });
 
             const savedOrder = await order.save();
             return savedOrder;
         } catch (error) {
+            console.log(error)
             if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
             } else if (error instanceof mongoose.Error.ValidationError) {
@@ -56,6 +69,42 @@ export default class orderRepository {
 
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -80,5 +129,26 @@ export default class orderRepository {
             }
         }
     }
+
+
+    async getCurrentOrder(orderId){
+        try {
+            const orderDetails = await OrderModel.findById(orderId);
+            if(!orderDetails){
+                throw new NotFoundError("Order not found");
+            }
+            return orderDetails;
+        } catch (error) {
+            if(error instanceof NotFoundError){
+                throw new NotFoundError(error.message)
+            }else{
+                throw new ApplicationError("Something went wrong in finding order",503);
+            }
+        }
+    }
+
+
+
+
 
 }
