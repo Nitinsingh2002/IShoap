@@ -25,6 +25,7 @@ export default class userRepository {
             return savedUser;
         }
         catch (error) {
+            console.log(error);
             if (error.code === 11000) {
                 throw new ValidationError("Email already registered", 422);
             } else if (error instanceof mongoose.Error.ValidationError) {

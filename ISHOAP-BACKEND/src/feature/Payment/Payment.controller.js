@@ -1,4 +1,5 @@
 import { instance } from "../../../index.js";
+import { generateReceipt } from "../../config/pdf.config.js";
 import PaymentRepository from "./Payment.repository.js";
 import crypto from 'crypto';
 
@@ -7,6 +8,7 @@ import crypto from 'crypto';
 export default class PaymentController {
    constructor() {
       this.PaymentRepository = new PaymentRepository();
+
    }
 
 
@@ -42,6 +44,7 @@ export default class PaymentController {
          if (generated_signature === razorpay_signature) {
             await this.PaymentRepository.addPayment(razorpay_payment_id, razorpay_order_id, razorpay_signature);
             await this.PaymentRepository.updatePayment(orderId, razorpay_order_id);
+            const Order = this.PaymentRepository.genrateAndSendMail(orderId);
             res.redirect('http://localhost:3000/order/sucessful');
          } else {
             res.redirect('http://localhost:3000/order/fail');
@@ -64,5 +67,9 @@ export default class PaymentController {
          next(error)
       }
    }
+
+
+
+
 
 }

@@ -30,7 +30,8 @@ export default class userController {
             sendWelcomeEmail(COMPANY_GMAIL, email, subject, text);
 
             return res.send("user registered sucessfully");
-        } catch (error) {
+        } catch (error) {  console.log(error);
+
             next(error)
         }
     }

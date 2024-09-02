@@ -23,7 +23,7 @@ const orderSchema = new mongoose.Schema({
     },
     AddressId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'addresses',
+        ref: 'Address',
         required: true
     },
     paymentStatus: {
