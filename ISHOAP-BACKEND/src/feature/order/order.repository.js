@@ -51,7 +51,7 @@ export default class orderRepository {
                 totalPrice: totalPrice,
                 AddressId: addressId,
                 PaymentId: paymentId,
-                paymentStatus:'pending'
+                paymentStatus: 'pending'
             });
 
             const savedOrder = await order.save();
@@ -118,7 +118,10 @@ export default class orderRepository {
             const result = await OrderModel.find({ userId: userId }).populate({
                 path: 'userId',
                 select: '-password'
-            }).populate('products.productId');
+            }).populate('AddressId').populate({
+                path: 'products.productId',
+                model: 'products'
+            })
             return result;
         } catch (error) {
             console.log(error)
@@ -131,18 +134,18 @@ export default class orderRepository {
     }
 
 
-    async getCurrentOrder(orderId){
+    async getCurrentOrder(orderId) {
         try {
             const orderDetails = await OrderModel.findById(orderId);
-            if(!orderDetails){
+            if (!orderDetails) {
                 throw new NotFoundError("Order not found");
             }
             return orderDetails;
         } catch (error) {
-            if(error instanceof NotFoundError){
+            if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
-            }else{
-                throw new ApplicationError("Something went wrong in finding order",503);
+            } else {
+                throw new ApplicationError("Something went wrong in finding order", 503);
             }
         }
     }

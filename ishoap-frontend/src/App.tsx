@@ -43,6 +43,7 @@ import { Provider } from 'react-redux'
 import { OrderSuccess } from "./component/OrderSucess/OrderSucess";
 import { OrderFail } from "./component/OrderSucess/PaymentFail";
 import { OrderFailure } from "./component/OrderSucess/OrderFail";
+import { ShowOrder } from "./component/showOrder/showOrder";
 
 
 
@@ -71,11 +72,11 @@ function App() {
             <Route path="/order/address" element={<><Navbar /><ListOfAddress /></>} />
             <Route path="/order/add-address" element={<><Navbar /> <AdForm /></>} />
             <Route path="/search/:query" element={<><Navbar /><SearchBar /> <SearchPage /></>} />
-            <Route path="/order/fail"    element= {<><Navbar></Navbar><OrderFailure></OrderFailure></>}/>
-          
-            <Route path="/order/sucessful"   element = {<><Navbar/><OrderSuccess/></>} />
-            <Route path  = "/order/fail/:orderId"   element = {<><Navbar/><OrderFail/></>}/>
-            <Route path="/order/fail"    element= {<><Navbar></Navbar><OrderFailure></OrderFailure></>}/>
+            <Route path="/order/fail" element={<><Navbar></Navbar><OrderFailure></OrderFailure></>} />
+            <Route path="/order-details" element={<><Navbar></Navbar><ShowOrder></ShowOrder></>}/>
+            <Route path="/order/sucessful" element={<><Navbar /><OrderSuccess /></>} />
+            <Route path="/order/fail/:orderId" element={<><Navbar /><OrderFail /></>} />
+            <Route path="/order/fail" element={<><Navbar></Navbar><OrderFailure></OrderFailure></>} />
 
 
             <Route path="/vendor" element={<VendorNavbar />}>

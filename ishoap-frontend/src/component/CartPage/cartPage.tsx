@@ -184,6 +184,7 @@ export const CartPage = () => {
 
 
                                     <Button variant="outlined" size="small" color="error" onClick={handleDeleteClick}>Delete</Button>
+
                                     <ReusableModal
                                         isOpen={isModalOpen}
                                         onClose={handleCloseModal}

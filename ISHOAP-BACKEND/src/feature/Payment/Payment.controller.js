@@ -69,7 +69,4 @@ export default class PaymentController {
    }
 
 
-
-
-
 }

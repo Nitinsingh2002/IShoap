@@ -75,7 +75,10 @@ export default class PaymentRepository {
 
     async genrateAndSendMail(orderId) {
         try {
-            const orderDetails = await OrderModel.findById(orderId).populate('AddressId').populate('userId').populate({
+            const orderDetails = await OrderModel.findById(orderId).populate('AddressId').populate({
+                path: 'userId',
+                select: '-password'
+            }).populate({
                 path: 'products.productId', 
                 model: 'products'
             })

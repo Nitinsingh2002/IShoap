@@ -54,9 +54,7 @@ export function Navbar() {
                 </div>
 
                 <div className={menu ? 'navbar-details showMenu' : 'navbar-details'}>
-                    <Link to="/" className='user-info-nav' onClick={handleOffMenu}>
-                        <div className='detail' ><i className="bi bi-house-door-fill" ></i>Home</div>
-                    </Link>
+                  
                     <Link to="/user-info" className='user-info-nav' onClick={handleOffMenu}>
                         <div className='detail ' ><i className="bi bi-person-circle"></i>
                             {decodedToken ? decodedToken.name.firstName : "User"}
@@ -67,6 +65,9 @@ export function Navbar() {
                     </Link>
                     <Link to='/cart' className='user-info-nav' onClick={handleOffMenu}>
                         <div className='detail'><i className="bi bi-basket-fill"></i>cart</div>
+                    </Link>
+                    <Link to='/order-details' className='user-info-nav' onClick={handleOffMenu}>
+                        <div className='detail'><i className="bi bi-bag-heart-fill"></i>Orders</div>
                     </Link>
                     <div className='detail' onClick={handleLogout}><i className="bi bi-box-arrow-in-right"></i>Logout</div>
                 </div>
