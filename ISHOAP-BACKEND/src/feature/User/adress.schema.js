@@ -8,7 +8,7 @@ export const addressSchema = new Schema({
     },
     name: {
         type: String,
-        required: [true,"Name is required"],
+        required: [true, "Name is required"],
         minlength: [2, "Name is too short"],
         maxlength: [40, "Name is too long"]
     },
@@ -37,7 +37,9 @@ export const addressSchema = new Schema({
         required: true,
         match: [/^\d{10}$/, 'Mobile number must be 10 digits long']
 
-    }
+    },
+
+
 })
 
 

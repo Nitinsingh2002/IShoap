@@ -98,4 +98,16 @@ userRoutes.get('/auth/github/callback',
 );
 
 
+
+
+//forgot password 
+userRoutes.post("/forgot-password", (req, res, next) => {
+    UserController.forgotPassword(req, res, next);
+})
+
+userRoutes.post("/reset-password/:token",(req,res,next)=>{
+    UserController.resetPassword(req,res,next);
+})
+
+
 export default userRoutes;

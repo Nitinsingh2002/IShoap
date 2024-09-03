@@ -12,8 +12,8 @@ export const userSchema = new Schema({
         },
         lastName: {
             type: String,
-           
-          
+
+
             maxlength: [30, "Last name cannot be more than 30 characters"]
         }
     },
@@ -50,6 +50,12 @@ export const userSchema = new Schema({
             },
             message: "Age can't be less than 10 years"
         }
+    },
+    resetPasswordToken: {
+        type: String
+    },
+    resetPasswordExpires: {
+        type: Date
     }
 });
 

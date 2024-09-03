@@ -2,7 +2,7 @@ import userRepository from "./user.repository.js";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
 import { sendWelcomeEmail } from "../../config/nodemailer.js";
-
+import crypto from 'crypto';
 
 export default class userController {
     constructor() {
@@ -30,7 +30,8 @@ export default class userController {
             sendWelcomeEmail(COMPANY_GMAIL, email, subject, text);
 
             return res.send("user registered sucessfully");
-        } catch (error) {  console.log(error);
+        } catch (error) {
+            console.log(error);
 
             next(error)
         }
@@ -41,8 +42,7 @@ export default class userController {
         try {
             const { email, password } = req.body;
             const user = await this.userRepository.customerLogin(email);
-            console.log(" user is, ", email);
-            console.log("user password is ",password);
+
 
             const match = await bcrypt.compare(password, user.password)
             if (match) {
@@ -139,6 +139,49 @@ export default class userController {
             const id = req.userId;
             const result = await this.userRepository.getoneUser(id);
             return res.status(200).send(result)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+
+    async forgotPassword(req, res, next) {
+        try {
+            const { email } = req.body
+            const user = await this.userRepository.customerLogin(email);
+
+            //genrate token for reset password
+            const resetToken = crypto.randomBytes(32).toString('hex');
+            const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+            await this.userRepository.forgotpassword(user, hashedToken);
+            const From = process.env.COMPANY_GMAIL
+            const subject = "Email for password reset";
+            const body = `You requested a password reset. Please click on the link below to reset your password:\n\n
+           http://localhost:8000/reset-password/${resetToken}\n\n
+    If you did not request this, please ignore this email.`
+
+            sendWelcomeEmail(From, email, subject, body);
+            return res.status(201).send("Please check your email ");
+
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    async resetPassword(req, res, next) {
+        try {
+            const { token } = rq.params;
+            const { password } = req.body;
+
+            const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await this.userRepository.findToken(hashedToken, hashedPassword);
+            return res.status(200).send("Password updated sucessfully");
+
         } catch (error) {
             next(error)
         }

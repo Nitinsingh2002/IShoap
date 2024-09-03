@@ -195,4 +195,43 @@ export default class userRepository {
             }
         }
     }
+
+
+    async forgotpassword(user, token) {
+        try {
+            user.resetPasswordToken = token;
+            const time = Date.now() + 60 * 10 * 1000;
+            user.resetPasswordExpires = time;
+            await user.save();
+
+        } catch (error) {
+            throw new ApplicationError("something went wrong in saving token to db", 503);
+        }
+    }
+
+    async findToken(token, password) {
+        try {
+            const user = await userModel.findOne({
+                resetPasswordToken: token,
+                resetPasswordExpires: { $gt: Date.now() }
+            })
+
+            if (!user) {
+                throw new NotFoundError("Password reset token is invalid or has expired")
+            }
+            user.password(password)
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+            await user.save();
+            return;
+
+        } catch (error) {
+            if (error instanceof NotFoundError) {
+                throw new NotFoundError(error.message)
+            } else {
+                throw new ApplicationError("something went wrong in updating password", 503)
+            }
+        }
+    }
+
 }
