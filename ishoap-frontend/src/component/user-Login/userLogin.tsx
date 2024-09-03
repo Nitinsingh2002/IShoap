@@ -146,10 +146,16 @@ export function Userlogin() {
 
           <hr  />
 
+             
+  
+                <div className="form-group ">
+                    <button className="btn btn-link form-control text-center"><Link to="/user/forgotPassword">Forgot password? click here </Link></button>
+                </div>
+
+
                 <div className="form-group mb-2 mt-0">
                     <button className="btn btn-link form-control text-center"><Link to="/register">Don't have an account? Register</Link></button>
                 </div>
-
 
 
             </form>
