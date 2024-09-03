@@ -219,17 +219,18 @@ export default class userRepository {
             if (!user) {
                 throw new NotFoundError("Password reset token is invalid or has expired")
             }
-            user.password(password)
+            user.password = password;
             user.resetPasswordToken = undefined;
             user.resetPasswordExpires = undefined;
             await user.save();
             return;
 
         } catch (error) {
+            console.log(error)
             if (error instanceof NotFoundError) {
                 throw new NotFoundError(error.message)
             } else {
-                throw new ApplicationError("something went wrong in updating password", 503)
+                throw new ApplicationError("something went wrong in changing password", 503)
             }
         }
     }

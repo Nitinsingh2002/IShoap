@@ -148,6 +148,7 @@ export default class userController {
 
     async forgotPassword(req, res, next) {
         try {
+
             const { email } = req.body
             const user = await this.userRepository.customerLogin(email);
 
@@ -159,7 +160,7 @@ export default class userController {
             const From = process.env.COMPANY_GMAIL
             const subject = "Email for password reset";
             const body = `You requested a password reset. Please click on the link below to reset your password:\n\n
-           http://localhost:8000/reset-password/${resetToken}\n\n
+           http://localhost:3000/reset-password/${resetToken}\n\n
     If you did not request this, please ignore this email.`
 
             sendWelcomeEmail(From, email, subject, body);
@@ -174,15 +175,18 @@ export default class userController {
 
     async resetPassword(req, res, next) {
         try {
-            const { token } = rq.params;
+
+            console.log("function called in backend")
+            const { token } = req.params;
             const { password } = req.body;
 
             const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
             const hashedPassword = await bcrypt.hash(password, 10);
             await this.userRepository.findToken(hashedToken, hashedPassword);
-            return res.status(200).send("Password updated sucessfully");
+            return res.status(200).send("Password changed sucessfully");
 
         } catch (error) {
+            console.log(error)
             next(error)
         }
     }
